@@ -12,11 +12,12 @@ import {index, pgTableCreator, serial, timestamp, varchar} from "drizzle-orm/pg-
  */
 export const createTable = pgTableCreator((name) => `theodosis_${name}`)
 
-export const posts = createTable(
-  "post",
+export const iamges = createTable(
+  "image",
   {
     id: serial("id").primaryKey(),
-    name: varchar("name", {length: 256}),
+    name: varchar("name", {length: 256}).notNull(),
+    url: varchar("name", {length: 1024}).notNull(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
