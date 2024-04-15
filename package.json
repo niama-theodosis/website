@@ -1,43 +1,45 @@
 {
-  "name": "@theodosis/website",
+  "name": "theodosis",
+  "version": "0.1.0",
+  "private": true,
   "type": "module",
-  "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro check && astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "build": "next build",
+    "db:push": "drizzle-kit push:pg",
+    "db:studio": "drizzle-kit studio",
+    "dev": "next dev",
+    "lint": "next lint",
+    "start": "next start"
   },
   "dependencies": {
-    "@astrojs/check": "^0.5.10",
-    "@astrojs/react": "^3.1.0",
-    "@astrojs/tailwind": "^5.1.0",
-    "@changesets/cli": "^2.27.1",
-    "@types/react": "^18.2.73",
-    "@types/react-dom": "^18.2.22",
-    "astro": "^4.5.10",
-    "astro-font": "^0.0.78",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.0",
-    "lucide-react": "^0.363.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "tailwind-merge": "^2.2.2",
-    "tailwind-variants": "^0.2.1",
-    "tailwindcss": "^3.4.3",
-    "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.4.3"
+    "@t3-oss/env-nextjs": "^0.9.2",
+    "drizzle-orm": "^0.29.4",
+    "next": "^14.1.3",
+    "postgres": "^3.4.3",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.12",
-    "@typescript-eslint/parser": "^7.4.0",
+    "@types/eslint": "^8.56.2",
+    "@types/node": "^20.11.20",
+    "@types/react": "^18.2.57",
+    "@types/react-dom": "^18.2.19",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
+    "drizzle-kit": "^0.20.14",
     "eslint": "^8.57.0",
-    "eslint-plugin-astro": "^0.33.1",
-    "eslint-plugin-jsx-a11y": "^6.8.0",
-    "eslint-plugin-unicorn": "^51.0.1",
+    "eslint-config-next": "^14.1.3",
+    "eslint-plugin-drizzle": "^0.2.3",
+    "pg": "^8.11.3",
+    "postcss": "^8.4.34",
     "prettier": "^3.2.5",
-    "prettier-plugin-astro": "^0.13.0",
-    "prettier-plugin-tailwindcss": "^0.5.13"
-  }
+    "prettier-plugin-tailwindcss": "^0.5.11",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.4.2"
+  },
+  "ct3aMetadata": {
+    "initVersion": "7.30.1"
+  },
+  "packageManager": "pnpm@8.15.6"
 }
