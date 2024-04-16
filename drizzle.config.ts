@@ -8,5 +8,4 @@ export default {
   dbCredentials: {
     connectionString: env.POSTGRES_URL,
   },
-  tablesFilter: ["theodosis_*"],
 } satisfies Config
