@@ -11,7 +11,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "~/components/ui/navigation-menu"
-import {Service} from "~/lib/schemas"
+import type {Service} from "~/lib/schemas"
 import {cn} from "~/lib/utils"
 
 // MAIN ************************************************************************************************************************************

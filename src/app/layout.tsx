@@ -26,7 +26,7 @@ async function Header() {
   // console.log(serviceDtos)
   const services = zService.array().parse(serviceDtos)
 
-  const socials: any[] = []
+  // const socials: any[] = []
 
   const name = ""
 
@@ -50,13 +50,13 @@ async function Header() {
                 Prendre rendez-vous
               </Link>
             </Button>
-            {socials.map(({Icon, id, url}) => (
+            {/* {socials.map(({Icon, id, url}) => (
               <Button key={id} size="icon" asChild>
                 <a href={url} target="_blank">
                   <Icon className="h-4 w-4" />
                 </a>
               </Button>
-            ))}
+            ))} */}
           </div>
         </div>
       </div>
