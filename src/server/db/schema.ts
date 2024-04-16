@@ -1,5 +1,5 @@
 import {relations, sql} from "drizzle-orm"
-import {integer, pgTable, serial, timestamp, varchar} from "drizzle-orm/pg-core"
+import {integer, pgTable, serial, text, timestamp, varchar} from "drizzle-orm/pg-core"
 
 // IMAGES **********************************************************************************************************************************
 export const images = pgTable("image", {
@@ -19,6 +19,8 @@ export const services = pgTable("service", {
   imageId: integer("image_id")
     .notNull()
     .references(() => images.id),
+  excerpt: text("excerpt").notNull(),
+  content: text("content"),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
