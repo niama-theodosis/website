@@ -1,12 +1,19 @@
 import slugify from "@sindresorhus/slugify"
 import {createSelectSchema} from "drizzle-zod"
 import {z} from "zod"
-import {images, services} from "~/server/db/schema"
+import {contacts, images, services} from "~/server/db/schema"
 
 // IMAGES **********************************************************************************************************************************
 export const zImageDto = createSelectSchema(images)
 
 export type ImageDto = z.infer<typeof zImageDto>
+
+// CONTACTS ********************************************************************************************************************************
+export const zContactDto = createSelectSchema(contacts)
+export const zContact = z.object({...zContactDto.shape, logo: zImageDto.nullish() })
+
+export type ContactDto = z.infer<typeof zContactDto>
+export type Contact = z.infer<typeof zContact>
 
 // SERVICES ********************************************************************************************************************************
 export const zServiceDto = createSelectSchema(services)

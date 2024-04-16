@@ -1,18 +1,19 @@
 import "~/styles/globals.css"
 
-import {CalendarHeart} from "lucide-react"
-import {Inter} from "next/font/google"
+import {CalendarHeart, Facebook, Instagram, Youtube} from "lucide-react"
+import {Poppins, Quicksand} from "next/font/google"
 import Link from "next/link"
+import {ThemeProvider} from "~/app/_components/theme-provider"
 import {Button} from "~/components/ui/button"
-import {zService} from "~/lib/schemas"
+import {zContact, zService} from "~/lib/schemas"
+import {cn} from "~/lib/utils"
 import {db} from "~/server/db"
-import Menu from "./_menu"
+import {DarkToggle} from "./_components/dark-toggle"
+import Menu from "./_components/menu"
 
 // FONTS ***********************************************************************************************************************************
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-})
+const poppins = Poppins({weight: "700", subsets: ["latin"], variable: "--font-heading"})
+const quicksand = Quicksand({subsets: ["latin"], variable: "--font-base"})
 
 // METADATA ********************************************************************************************************************************
 export const metadata = {
@@ -23,12 +24,16 @@ export const metadata = {
 
 async function Header() {
   const serviceDtos = await db.query.services.findMany({with: {image: true}})
-  // console.log(serviceDtos)
   const services = zService.array().parse(serviceDtos)
 
-  // const socials: any[] = []
+  const contactDto = await db.query.contacts.findFirst({with: {logo: true}})
+  const {facebook, instagram, name, youtube} = zContact.parse(contactDto)
 
-  const name = ""
+  const socials = [
+    {id: "instagram", Icon: Instagram, url: instagram},
+    {id: "youtube", Icon: Youtube, url: youtube},
+    {id: "facebook", Icon: Facebook, url: facebook},
+  ]
 
   return (
     <header className="sticky top-0 z-20 border-b border-transparent bg-white py-5 transition-all">
@@ -50,13 +55,14 @@ async function Header() {
                 Prendre rendez-vous
               </Link>
             </Button>
-            {/* {socials.map(({Icon, id, url}) => (
+            {socials.map(({Icon, id, url}) => (
               <Button key={id} size="icon" asChild>
-                <a href={url} target="_blank">
+                <a href={url ?? ""} target="_blank">
                   <Icon className="h-4 w-4" />
                 </a>
               </Button>
-            ))} */}
+            ))}
+            <DarkToggle />
           </div>
         </div>
       </div>
@@ -67,10 +73,12 @@ async function Header() {
 // MAIN ************************************************************************************************************************************
 export default function RootLayout({children}: Props) {
   return (
-    <html lang="fr">
-      <body className={`font-sans ${inter.variable}`}>
-        <Header />
-        {children}
+    <html lang="fr" suppressHydrationWarning>
+      <body className={cn("font-base flex min-h-screen flex-col bg-background antialiased", poppins.variable, quicksand.variable)}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <Header />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )
