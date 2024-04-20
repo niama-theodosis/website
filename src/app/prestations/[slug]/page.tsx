@@ -28,7 +28,7 @@ export default async function ServicesItemPage({params: {slug}}: ServicesItemPag
 export type ServicesItemPageProps = {params: {slug: string}}
 
 // ITEM ************************************************************************************************************************************
-export function Item({service: {benefits, proceedings}}: {service: Service}) {
+function Item({service: {benefits, proceedings}}: {service: Service}) {
   return (
     <Accordion type="single" collapsible className="w-full">
       <AccordionItem value="proceedings">
