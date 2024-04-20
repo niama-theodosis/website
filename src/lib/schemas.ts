@@ -1,4 +1,3 @@
-import slugify from "@sindresorhus/slugify"
 import {createSelectSchema} from "drizzle-zod"
 import {z} from "zod"
 import {contacts, images, services} from "~/server/db/schema"
@@ -10,7 +9,7 @@ export type ImageDto = z.infer<typeof zImageDto>
 
 // CONTACTS ********************************************************************************************************************************
 export const zContactDto = createSelectSchema(contacts)
-export const zContact = z.object({...zContactDto.shape, logo: zImageDto.nullish() })
+export const zContact = z.object({...zContactDto.shape, logo: zImageDto.nullish()})
 
 export type ContactDto = z.infer<typeof zContactDto>
 export type Contact = z.infer<typeof zContact>
@@ -18,10 +17,11 @@ export type Contact = z.infer<typeof zContact>
 // SERVICES ********************************************************************************************************************************
 export const zServiceDto = createSelectSchema(services)
 
-export const zService = z.object({...zServiceDto.shape, image: zImageDto }).transform((data) => {
-  const slug = slugify(data.name)
-  const uri = `/services/${slug}`
-  return {...data, slug, uri}
+export const zService = z.object({...zServiceDto.shape, image: zImageDto}).transform((data) => {
+  const uri = `/prestations/${data.slug}`
+  const meetingUri = `/rendez-vous/${data.slug}`
+  const zcalUrl = `https://zcal.co/i/${data.zcal}?embed=1&embedType=iframe`
+  return {...data, meetingUri, uri, zcalUrl}
 })
 
 export type ServiceDto = z.infer<typeof zServiceDto>

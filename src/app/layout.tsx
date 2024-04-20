@@ -5,9 +5,8 @@ import {Poppins, Quicksand} from "next/font/google"
 import Link from "next/link"
 import {ThemeProvider} from "~/app/_components/theme-provider"
 import {Button} from "~/components/ui/button"
-import {zContact, zService} from "~/lib/schemas"
 import {cn} from "~/lib/utils"
-import {db} from "~/server/db"
+import {fetchContact, fetchServices} from "~/server/db"
 import {DarkToggle} from "./_components/dark-toggle"
 import Menu from "./_components/menu"
 
@@ -22,12 +21,17 @@ export const metadata = {
   icons: [{rel: "icon", url: "/favicon.ico"}],
 }
 
-async function Header() {
-  const serviceDtos = await db.query.services.findMany({with: {image: true}})
-  const services = zService.array().parse(serviceDtos)
+function Footer() {
+  return (
+    <footer className="flex justify-between border-t-[1px] bg-neutral-700 p-6 text-white">
+      <Link href="/mentions-legales">Mentions légales</Link>
+      <div>Copyright © 2024 Theodosis. Tous droits réservés.</div>
+    </footer>
+  )
+}
 
-  const contactDto = await db.query.contacts.findFirst({with: {logo: true}})
-  const {facebook, instagram, name, youtube} = zContact.parse(contactDto)
+async function Header() {
+  const [{facebook, instagram, name, youtube}, services] = await Promise.all([fetchContact(), fetchServices()])
 
   const socials = [
     {id: "instagram", Icon: Instagram, url: instagram},
@@ -74,10 +78,11 @@ async function Header() {
 export default function RootLayout({children}: Props) {
   return (
     <html lang="fr" suppressHydrationWarning>
-      <body className={cn("font-base flex min-h-screen flex-col bg-background antialiased", poppins.variable, quicksand.variable)}>
+      <body className={cn("font-base flex min-h-screen flex-col antialiased", poppins.variable, quicksand.variable)}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Header />
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

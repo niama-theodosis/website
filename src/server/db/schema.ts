@@ -1,6 +1,6 @@
 import {relations, sql} from "drizzle-orm"
 
-import {integer, pgTable, real, serial, text, timestamp, varchar} from "drizzle-orm/pg-core"
+import {integer, interval, pgEnum, pgTable, real, serial, text, timestamp, varchar} from "drizzle-orm/pg-core"
 
 // CONTACT *********************************************************************************************************************************
 export const contacts = pgTable("contact", {
@@ -42,14 +42,25 @@ export const images = pgTable("image", {
 })
 
 // SERVICES ********************************************************************************************************************************
+export const placeEnum = pgEnum("place", ["faceToFace", "remotely"])
+export const paymentEnum = pgEnum("payment", ["cash", "check", "creditCard"])
+
 export const services = pgTable("service", {
   id: serial("id").primaryKey(),
+  slug: varchar("slug", {length: 256}).notNull(),
   name: varchar("name", {length: 256}).notNull(),
   imageId: integer("image_id")
     .notNull()
     .references(() => images.id),
+  zcal: varchar("zcal", {length: 16}).notNull(),
+  places: placeEnum("place").array(),
+  payments: paymentEnum("payment").array(),
+  price: real("price").notNull(),
+  duration: interval("duration", {fields: "hour to minute"}).notNull(),
   excerpt: text("excerpt").notNull(),
   content: text("content"),
+  proceedings: text("proceedings"),
+  benefits: text("benefits"),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
