@@ -1,7 +1,5 @@
 "use client"
 
-import Image from "next/image"
-import Link from "next/link"
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -10,9 +8,11 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "~/components/ui/navigation-menu"
-import type {Service} from "~/lib/schemas"
-import {cn} from "~/lib/utils"
+} from "@/components/ui/navigation-menu"
+import type {Service} from "@/lib/schemas"
+import {cn} from "@/lib/utils"
+import Image from "next/image"
+import Link from "next/link"
 
 // MAIN ************************************************************************************************************************************
 export default function Menu({services}: Props) {

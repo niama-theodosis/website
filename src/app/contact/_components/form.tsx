@@ -1,16 +1,16 @@
 "use client"
 
+import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert"
+import {Button} from "@/components/ui/button"
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form"
+import {Input} from "@/components/ui/input"
+import {Textarea} from "@/components/ui/textarea"
+import {cn} from "@/lib/utils"
 import {zodResolver} from "@hookform/resolvers/zod"
-import {Loader2, Send} from "lucide-react"
 import {useEffect, useState} from "react"
 import {useFormState, useFormStatus} from "react-dom"
 import {useForm, useFormContext} from "react-hook-form"
 import {toast} from "sonner"
-import {Alert, AlertDescription, AlertTitle} from "~/components/ui/alert"
-import {Button} from "~/components/ui/button"
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "~/components/ui/form"
-import {Input} from "~/components/ui/input"
-import {Textarea} from "~/components/ui/textarea"
 import {defaultData, zData, type Data} from "../_utils"
 import {sendEmail, type State} from "../actions"
 
@@ -20,7 +20,7 @@ export function Submit() {
 
   return (
     <Button type="submit" disabled={pending} className="flex gap-2 self-end text-base">
-      {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+      <span className={cn("h-4 w-4", pending ? "i-lucide-loader animate-spin" : "i-lucide-send")}></span>
       <span>Envoyer</span>
     </Button>
   )

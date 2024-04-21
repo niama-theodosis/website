@@ -1,8 +1,8 @@
+import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert"
+import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator} from "@/components/ui/breadcrumb"
+import {fetchService} from "@/server/db"
 import Link from "next/link"
 import {notFound} from "next/navigation"
-import {Alert, AlertDescription, AlertTitle} from "~/components/ui/alert"
-import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator} from "~/components/ui/breadcrumb"
-import {fetchService} from "~/server/db"
 
 // MAIN ************************************************************************************************************************************
 export default async function MeetingItemPage({params: {slug}}: MeetingItemPageProps) {

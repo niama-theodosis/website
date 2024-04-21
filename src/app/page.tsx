@@ -1,12 +1,10 @@
+import {Button} from "@/components/ui/button"
+import {Card, CardContent, CardHeader} from "@/components/ui/card"
+import {HEADING, P} from "@/components/ui/typography"
+import {cn} from "@/lib/utils"
+import {fetchServices} from "@/server/db"
 import Image from "next/image"
 import Link from "next/link"
-import {Button} from "~/components/ui/button"
-import {Card, CardContent, CardHeader} from "~/components/ui/card"
-import {HEADING, P} from "~/components/ui/typography"
-import {cn} from "~/lib/utils"
-import {fetchServices} from "~/server/db"
-// import ArrowRight from "~icons/lucide/arrow-right.jsx"
-// import CalendarHeart from "~icons/lucide/calendar-heart.jsx"
 
 // MAIN ************************************************************************************************************************************
 export default function HomePage() {
@@ -44,7 +42,7 @@ function HeroSection() {
           <Button variant="secondary" asChild className="self-end">
             <Link href="/">
               En savoir plus
-              {/* <ArrowRight className="ml-2 h-4 w-4" /> */}
+              <span className="i-lucide-arrow-right ml-2 h-4 w-4"></span>
             </Link>
           </Button>
         </div>
@@ -83,7 +81,7 @@ async function ServicesSection() {
                     className={cn(slug === "transmutation-des-memoires-cellulaires" && "bg-secondary hover:bg-secondary/80")}
                   >
                     <Link href={meetingUri}>
-                      {/* <CalendarHeart className="h-4 w-4" /> */}
+                      <span className="i-lucide-calendar-heart h-4 w-4"></span>
                     </Link>
                   </Button>
                   <Button
@@ -92,7 +90,7 @@ async function ServicesSection() {
                   >
                     <Link href={uri}>
                       En savoir plus
-                      {/* <ArrowRight className="ml-2 h-4 w-4" /> */}
+                      <span className="i-lucide-arrow-right ml-2 h-4 w-4"></span>
                     </Link>
                   </Button>
                 </div>
@@ -127,7 +125,7 @@ function AboutSection() {
           <Button asChild className="self-end">
             <Link href="/">
               En savoir plus
-              {/* <ArrowRight className="ml-2 h-4 w-4" /> */}
+              <span className="i-lucide-arrow-right ml-2 h-4 w-4"></span>
             </Link>
           </Button>
         </CardContent>
@@ -136,7 +134,7 @@ function AboutSection() {
   )
 }
 
-// BLOG ************************************************************************************************************************************
+// // BLOG ************************************************************************************************************************************
 function BlogSection() {
   return (
     <section className="w-full bg-white py-10">

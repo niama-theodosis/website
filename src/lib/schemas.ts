@@ -1,6 +1,6 @@
+import {contacts, images, services} from "@/server/db/schema"
 import {createSelectSchema} from "drizzle-zod"
 import {z} from "zod"
-import {contacts, images, services} from "~/server/db/schema"
 
 // IMAGES **********************************************************************************************************************************
 export const zImageDto = createSelectSchema(images)

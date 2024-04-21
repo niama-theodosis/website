@@ -1,7 +1,7 @@
+import {zContact, zService} from "@/lib/schemas"
 import {sql} from "@vercel/postgres"
 import {drizzle} from "drizzle-orm/vercel-postgres"
 import {cache} from "react"
-import {zContact, zService} from "~/lib/schemas"
 import * as schema from "./schema"
 
 // CLIENT **********************************************************************************************************************************

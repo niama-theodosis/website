@@ -1,12 +1,11 @@
-import "~/styles/globals.css"
+import "@/styles/globals.css"
 
-import {CalendarHeart, Facebook, Instagram, Youtube} from "lucide-react"
+import {ThemeProvider} from "@/app/_components/theme-provider"
+import {Button} from "@/components/ui/button"
+import {cn} from "@/lib/utils"
+import {fetchContact, fetchServices} from "@/server/db"
 import {Poppins, Quicksand} from "next/font/google"
 import Link from "next/link"
-import {ThemeProvider} from "~/app/_components/theme-provider"
-import {Button} from "~/components/ui/button"
-import {cn} from "~/lib/utils"
-import {fetchContact, fetchServices} from "~/server/db"
 import {DarkToggle} from "./_components/dark-toggle"
 import Menu from "./_components/menu"
 
@@ -21,6 +20,22 @@ export const metadata = {
   icons: [{rel: "icon", url: "/favicon.ico"}],
 }
 
+// MAIN ************************************************************************************************************************************
+export default function RootLayout({children}: Props) {
+  return (
+    <html lang="fr" suppressHydrationWarning>
+      <body className={cn("font-base flex min-h-screen flex-col antialiased", poppins.variable, quicksand.variable)}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <Header />
+          {children}
+          <Footer />
+        </ThemeProvider>
+      </body>
+    </html>
+  )
+}
+
+// COMPONENTS ******************************************************************************************************************************
 function Footer() {
   return (
     <footer className="flex justify-between border-t-[1px] bg-neutral-700 p-6 text-white">
@@ -34,9 +49,9 @@ async function Header() {
   const [{facebook, instagram, name, youtube}, services] = await Promise.all([fetchContact(), fetchServices()])
 
   const socials = [
-    {id: "instagram", Icon: Instagram, url: instagram},
-    {id: "youtube", Icon: Youtube, url: youtube},
-    {id: "facebook", Icon: Facebook, url: facebook},
+    {id: "instagram", icon: "i-lucide-instagram", url: instagram},
+    {id: "youtube", icon: "i-lucide-youtube", url: youtube},
+    {id: "facebook", icon: "i-lucide-facebook", url: facebook},
   ]
 
   return (
@@ -55,14 +70,14 @@ async function Header() {
           <div className="flex gap-2">
             <Button variant="secondary" asChild>
               <Link href="/rendez-vous">
-                <CalendarHeart className="mr-2 h-4 w-4" />
+                <span className="mr-2 h-4 w-4 i-lucide-calendar-heart "></span>
                 Prendre rendez-vous
               </Link>
             </Button>
-            {socials.map(({Icon, id, url}) => (
+            {socials.map(({icon, id, url}) => (
               <Button key={id} size="icon" asChild>
                 <a href={url ?? ""} target="_blank">
-                  <Icon className="h-4 w-4" />
+                  <span className={cn(icon, "h-4 w-4")}></span>
                 </a>
               </Button>
             ))}
@@ -74,20 +89,7 @@ async function Header() {
   )
 }
 
-// MAIN ************************************************************************************************************************************
-export default function RootLayout({children}: Props) {
-  return (
-    <html lang="fr" suppressHydrationWarning>
-      <body className={cn("font-base flex min-h-screen flex-col antialiased", poppins.variable, quicksand.variable)}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <Header />
-          {children}
-          <Footer />
-        </ThemeProvider>
-      </body>
-    </html>
-  )
-}
+
 
 // TYPES ***********************************************************************************************************************************
 interface Props {

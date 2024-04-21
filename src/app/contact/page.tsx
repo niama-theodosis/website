@@ -1,9 +1,9 @@
+import {Button} from "@/components/ui/button"
+import {Card, CardContent} from "@/components/ui/card"
+import {Toaster} from "@/components/ui/sonner"
+import {HEADING} from "@/components/ui/typography"
+import {fetchContact} from "@/server/db"
 import dynamic from "next/dynamic"
-import {Button} from "~/components/ui/button"
-import {Card, CardContent} from "~/components/ui/card"
-import {Toaster} from "~/components/ui/sonner"
-import {HEADING} from "~/components/ui/typography"
-import {fetchContact} from "~/server/db"
 import ContactForm from "./_components/form"
 
 // MAIN ************************************************************************************************************************************
@@ -39,7 +39,6 @@ async function Aside() {
       <CardContent className="flex flex-col gap-8 p-8">
         <div className="flex flex-col items-center gap-4 text-center">
           <span className="i-lucide-map-pin h-16 w-16 rounded-xl bg-primary p-4 text-primary-foreground"></span>
-          {/* <MapPin className="h-16 w-16 rounded-xl bg-primary p-4 text-primary-foreground" /> */}
           <h4 className={HEADING({level: 4})}>Adresse :</h4>
           <div>
             <p>{street}</p>
@@ -49,7 +48,7 @@ async function Aside() {
           </div>
         </div>
         <div className="flex flex-col items-center gap-4 text-center">
-          {/* <Phone className="h-16 w-16 rounded-xl bg-primary p-4 text-primary-foreground" /> */}
+          <span className="i-lucide-phone h-16 w-16 rounded-xl bg-primary p-4 text-primary-foreground"></span>
           <h4 className={HEADING({level: 4})}>Téléphone :</h4>
           <div>
             <p>N&apos;hésitez pas à me contacter si vous avez la moindre question :</p>
@@ -59,7 +58,7 @@ async function Aside() {
           </div>
         </div>
         <div className="flex flex-col items-center gap-4 text-center">
-          {/* <Mail className="h-16 w-16 rounded-xl bg-primary p-4 text-primary-foreground" /> */}
+          <span className="i-lucide-mail h-16 w-16 rounded-xl bg-primary p-4 text-primary-foreground"></span>
           <h4 className={HEADING({level: 4})}>Courriel :</h4>
           <div>
             <p>Vous pouvez aussi me contacter directement par courriel :</p>
