@@ -1,5 +1,7 @@
 import {getIconCollections, iconsPlugin} from "@egoist/tailwindcss-icons"
+import typography from "@tailwindcss/typography"
 import type {Config} from "tailwindcss"
+import animate from "tailwindcss-animate"
 
 const config = {
   darkMode: ["class"],
@@ -75,10 +77,11 @@ const config = {
     },
   },
   plugins: [
-    require("tailwindcss-animate"),
+    animate,
     iconsPlugin({
       collections: getIconCollections(["mdi", "lucide"]),
     }),
+    typography
   ],
 } satisfies Config
 

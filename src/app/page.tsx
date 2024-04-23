@@ -1,10 +1,11 @@
 import {Button} from "@/components/ui/button"
 import {Card, CardContent, CardHeader} from "@/components/ui/card"
 import {HEADING, P} from "@/components/ui/typography"
+import {fetchServices} from "@/lib/db"
 import {cn} from "@/lib/utils"
-import {fetchServices} from "@/server/db"
 import Image from "next/image"
 import Link from "next/link"
+import HomeBlog from "./_components/blog"
 
 // MAIN ************************************************************************************************************************************
 export default function HomePage() {
@@ -13,7 +14,7 @@ export default function HomePage() {
       <HeroSection />
       <ServicesSection />
       <AboutSection />
-      <BlogSection />
+      <HomeBlog />
       <NewsletterSection />
     </main>
   )
@@ -22,6 +23,7 @@ export default function HomePage() {
 // HERO ************************************************************************************************************************************
 function HeroSection() {
   const hero = {
+    image: "https://utfs.io/f/3bf8603c-0ce7-4e28-8b0a-a960cd2fa77e-2ihokg.jpeg",
     title: "Que sont les mémoires cellulaires ?",
   }
 
@@ -46,8 +48,8 @@ function HeroSection() {
             </Link>
           </Button>
         </div>
-        <div className="hidden overflow-hidden rounded-full lg:col-span-5 lg:mt-0 lg:flex">
-          {/* <Image src={heroImg} alt="hero"></Image> */}
+        <div className="hidden overflow-hidden rounded-full lg:col-span-5 lg:mt-0 lg:flex relative">
+          <Image src={hero.image} alt="hero" width={1024} height={1024}></Image>
         </div>
       </div>
     </section>
@@ -67,7 +69,7 @@ async function ServicesSection() {
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
         </header>
-        <ul className="mx-auto grid max-w-screen-xl gap-8 lg:grid-cols-3">
+        <ul className="mx-auto grid max-w-screen-xl gap-8 lg:grid-cols-4">
           {services.toReversed().map(({excerpt, id, image, meetingUri, name, slug, uri}) => (
             <li key={id} className="flex flex-col gap-5">
               <Image src={image.url} alt={name} width={1024} height={1024} className="aspect-video rounded-2xl object-cover" />
@@ -134,26 +136,6 @@ function AboutSection() {
   )
 }
 
-// // BLOG ************************************************************************************************************************************
-function BlogSection() {
-  return (
-    <section className="w-full bg-white py-10">
-      <div className="mx-auto flex max-w-screen-xl flex-col items-center gap-8">
-        <header className="mx-auto max-w-2xl space-y-4 text-center">
-          <h2 className={HEADING({level: 2})}>Mes derniers articles</h2>
-          <p className={P()}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
-        </header>
-        {/* <div className="mx-auto grid max-w-screen-xl gap-8 lg:grid-cols-3">
-          {posts.map((item) => (
-            <PostItem key={item._id} item={item} />
-          ))}
-        </div> */}
-      </div>
-    </section>
-  )
-}
 
 // NEWSLETTER ******************************************************************************************************************************
 function NewsletterSection() {

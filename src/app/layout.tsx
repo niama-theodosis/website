@@ -2,11 +2,10 @@ import "@/styles/globals.css"
 
 import {ThemeProvider} from "@/app/_components/theme-provider"
 import {Button} from "@/components/ui/button"
+import {fetchContact, fetchServices} from "@/lib/db"
 import {cn} from "@/lib/utils"
-import {fetchContact, fetchServices} from "@/server/db"
 import {Poppins, Quicksand} from "next/font/google"
 import Link from "next/link"
-import {DarkToggle} from "./_components/dark-toggle"
 import Menu from "./_components/menu"
 
 // FONTS ***********************************************************************************************************************************
@@ -24,7 +23,13 @@ export const metadata = {
 export default function RootLayout({children}: Props) {
   return (
     <html lang="fr" suppressHydrationWarning>
-      <body className={cn("font-base flex min-h-screen flex-col antialiased", poppins.variable, quicksand.variable)}>
+      <body
+        className={cn(
+          "font-base flex min-h-screen flex-col overflow-x-hidden overflow-y-scroll antialiased",
+          poppins.variable,
+          quicksand.variable
+        )}
+      >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <Header />
           {children}
@@ -70,7 +75,7 @@ async function Header() {
           <div className="flex gap-2">
             <Button variant="secondary" asChild>
               <Link href="/rendez-vous">
-                <span className="mr-2 h-4 w-4 i-lucide-calendar-heart "></span>
+                <span className="i-lucide-calendar-heart mr-2 h-4 w-4 "></span>
                 Prendre rendez-vous
               </Link>
             </Button>
@@ -81,15 +86,12 @@ async function Header() {
                 </a>
               </Button>
             ))}
-            <DarkToggle />
           </div>
         </div>
       </div>
     </header>
   )
 }
-
-
 
 // TYPES ***********************************************************************************************************************************
 interface Props {

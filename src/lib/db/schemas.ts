@@ -1,4 +1,4 @@
-import {contacts, images, services} from "@/server/db/schema"
+import {contacts, images, services} from "@/lib/db/schema"
 import {createSelectSchema} from "drizzle-zod"
 import {z} from "zod"
 

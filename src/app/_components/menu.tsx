@@ -9,7 +9,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-import type {Service} from "@/lib/schemas"
+import type {Service} from "@/lib/db/schemas"
 import {cn} from "@/lib/utils"
 import Image from "next/image"
 import Link from "next/link"

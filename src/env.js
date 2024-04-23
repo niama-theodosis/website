@@ -7,8 +7,10 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-    POSTGRES_URL: z.string().url(),
+    HASHNODE_GQL_ENDPOINT: z.string().url(),
+    HASHNODE_PUBLICATION_HOST: z.string(),
     NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
+    POSTGRES_URL: z.string().url(),
   },
 
   /**
@@ -25,8 +27,10 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
-    POSTGRES_URL: process.env.POSTGRES_URL,
+    HASHNODE_GQL_ENDPOINT: process.env.HASHNODE_GQL_ENDPOINT,
+    HASHNODE_PUBLICATION_HOST: process.env.HASHNODE_PUBLICATION_HOST,
     NODE_ENV: process.env.NODE_ENV,
+    POSTGRES_URL: process.env.POSTGRES_URL,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**

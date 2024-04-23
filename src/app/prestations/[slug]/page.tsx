@@ -1,6 +1,6 @@
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion"
-import type {Service} from "@/lib/schemas"
-import {fetchService} from "@/server/db"
+import {fetchService} from "@/lib/db"
+import type {Service} from "@/lib/db/schemas"
 import {notFound} from "next/navigation"
 
 // MAIN ************************************************************************************************************************************

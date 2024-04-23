@@ -3,48 +3,39 @@ import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert"
 import {Section, SectionContent, SectionHeader, SectionTagline, SectionTitle} from "@/components/ui/section"
 import {env} from "@/env"
 import {hashnode} from "@/lib/hashnode"
-import {PageInfoFragment} from "@/lib/hashnode/fragments"
 import {graphql} from "@/lib/hashnode/graphql"
 
 // GQL *************************************************************************************************************************************
-const Query = graphql(
+export const Query = graphql(
   `
     query PostsByPublication($host: String!, $first: Int!, $after: String) {
       publication(host: $host) {
-        about {
-          text
-        }
-        displayTitle
         posts(first: $first, after: $after) {
           edges {
             node {
               ...PostCard
             }
           }
-          pageInfo {
-            ...PageInfo
-          }
         }
-        title
       }
     }
   `,
-  [PageInfoFragment, PostCardFragment]
+  [PostCardFragment]
 )
 
 // MAIN ************************************************************************************************************************************
-export default async function BlogPage() {
-  const data = await hashnode.request(Query, {host: env.HASHNODE_PUBLICATION_HOST, first: 20})
-  const title = data.publication?.displayTitle ?? data.publication?.title ?? "Blog"
-  const tagline = data.publication?.about?.text ?? "Découvrez nos articles"
+export default async function HomeBlog() {
+  const data = await hashnode.request(Query, {host: env.HASHNODE_PUBLICATION_HOST, first: 3})
   const posts = data.publication?.posts.edges ?? []
 
   return (
-    <Section className="flex-1">
+    <Section className="bg-white">
       <SectionContent>
         <SectionHeader>
-          <SectionTitle>{title}</SectionTitle>
-          <SectionTagline>{tagline}</SectionTagline>
+          <SectionTitle>Mes derniers articles</SectionTitle>
+          <SectionTagline>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </SectionTagline>
         </SectionHeader>
         {posts.length > 0 ? (
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -54,7 +45,7 @@ export default async function BlogPage() {
           </div>
         ) : (
           <div className="flex flex-1 items-center justify-center">
-            <Alert>
+            <Alert className="w-auto">
               <AlertTitle>Revenez prochainement!</AlertTitle>
               <AlertDescription>Il n&apos;y a actuellement encore aucun article.</AlertDescription>
             </Alert>
