@@ -46,7 +46,7 @@ function HomeHero() {
             <SectionTagline dangerouslySetInnerHTML={{__html: hero.content}} className="text-justify lg:text-left"></SectionTagline>
           </SectionHeader>
           <Button variant="secondary" asChild className="self-end">
-            <Link href="/">
+            <Link href="/prestations/transmutation-des-memoires-cellulaires">
               En savoir plus
               <span className="i-lucide-arrow-right ml-2 h-4 w-4"></span>
             </Link>
