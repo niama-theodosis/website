@@ -1,6 +1,6 @@
 import {Button} from "@/components/ui/button"
 import {Card, CardContent} from "@/components/ui/card"
-import {Section, SectionAside, SectionContent, SectionHeader, SectionTagline, SectionTitle} from "@/components/ui/section"
+import {Section, SectionAside, SectionContent, SectionHeader, SectionMain, SectionTagline, SectionTitle} from "@/components/ui/section"
 import {Toaster} from "@/components/ui/sonner"
 import {HEADING} from "@/components/ui/typography"
 import {fetchContact} from "@/lib/db"
@@ -15,17 +15,19 @@ export default async function ContactPage() {
     <>
       <Section className="flex-1">
         <SectionContent>
-          <SectionHeader>
-            <SectionTitle>Contactez-moi</SectionTitle>
-            <SectionTagline>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </SectionTagline>
-          </SectionHeader>
-          <ContactForm />
+          <SectionMain>
+            <SectionHeader>
+              <SectionTitle>Contactez-moi</SectionTitle>
+              <SectionTagline>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </SectionTagline>
+            </SectionHeader>
+            <ContactForm />
+          </SectionMain>
+          <SectionAside>
+            <Aside />
+          </SectionAside>
         </SectionContent>
-        <SectionAside>
-          <Aside />
-        </SectionAside>
       </Section>
       <Map center={[lat, lng]} zoom={13} className="h-96 w-full" />
       <Toaster richColors />
