@@ -62,7 +62,7 @@ async function Header() {
   return (
     <header className="sticky top-0 z-20 border-b border-transparent bg-white py-5 transition-all">
       <div className="mx-auto max-w-screen-xl px-5">
-        <div className="relative z-10 flex flex-col items-center justify-between lg:flex-row">
+        <div className="relative z-10 flex items-center justify-between">
           <div className="flex w-full items-center justify-between lg:w-auto">
             <Link
               href="/"
@@ -75,8 +75,8 @@ async function Header() {
           <div className="flex gap-2">
             <Button variant="secondary" asChild>
               <Link href="/rendez-vous">
-                <span className="i-lucide-calendar-heart mr-2 h-4 w-4 "></span>
-                Prendre rendez-vous
+                <span className="i-lucide-calendar-heart lg:mr-2 h-4 w-4"></span>
+                <span className="hidden lg:block">Prendre rendez-vous</span>
               </Link>
             </Button>
             {socials.map(({icon, id, url}) => (

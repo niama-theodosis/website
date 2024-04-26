@@ -1,19 +1,37 @@
 import * as React from "react"
-import {tv} from "tailwind-variants"
+import {tv, type VariantProps} from "tailwind-variants"
+import {HEADING} from "./typography"
 
 // STYLES **********************************************************************************************************************************
 export const SECTION = tv({
   slots: {
-    ASIDE: "",
-    BASE: "bg-background flex",
-    CONTENT: "mx-auto max-w-screen-xl flex flex-col px-4 py-8 gap-12 lg:px-6 lg:py-16",
-    HEADER: "text-center flex flex-col gap-4",
-    TITLE: "text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white lg:text-4xl font-heading",
-    TAGLINE: "font-light text-gray-500 dark:text-gray-400 sm:text-xl",
+    ASIDE: `SECTION_ASIDE flex flex-col gap-8 col-span-12 
+    lg:col-span-5`,
+    BASE: `SECTION bg-background flex flex-col px-8 py-16 w-full`,
+    CONTENT: `SECTION_CONTENT grid max-w-screen-xl mx-auto space-y-8 grid-cols-12
+    lg:space-x-8 lg:space-y-0`,
+    HEADER: `SECTION_HEADER flex flex-col gap-4 text-center`,
+    MAIN: `SECTION_MAIN flex flex-col gap-8 col-span-12 
+    lg:col-span-7 lg:only:col-span-12`,
+    TITLE: "SECTION_TITLE",
+    TAGLINE: `SECTION_TAGLINE text-gray-600 text-lg`,
+  },
+  variants: {
+    level: {
+      1: {TITLE: HEADING({level: 1})},
+      2: {TITLE: HEADING({level: 2})},
+      3: {TITLE: HEADING({level: 3})},
+      4: {TITLE: HEADING({level: 4})},
+      5: {TITLE: HEADING({level: 5})},
+      6: {TITLE: HEADING({level: 6})},
+    },
+  },
+  defaultVariants: {
+    level: 2,
   },
 })
 
-const {ASIDE, BASE, CONTENT, HEADER, TAGLINE, TITLE} = SECTION()
+const {ASIDE, BASE, CONTENT, HEADER, MAIN, TAGLINE, TITLE} = SECTION()
 
 // export default function Seection({className: C = {}, tagline, title}: Props) {
 //   return (
@@ -60,6 +78,12 @@ export const SectionHeader = React.forwardRef<HTMLDivElement, React.HTMLAttribut
 ))
 SectionHeader.displayName = "SectionHeader"
 
+// MAIN ************************************************************************************************************************************
+export const SectionMain = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({className, ...props}, ref) => (
+  <main ref={ref} className={MAIN({className})} {...props} />
+))
+SectionMain.displayName = "SectionMain"
+
 // TAGLINE *********************************************************************************************************************************
 export const SectionTagline = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
   ({className, ...props}, ref) => <p ref={ref} className={TAGLINE({className})} {...props} />
@@ -67,7 +91,7 @@ export const SectionTagline = React.forwardRef<HTMLParagraphElement, React.HTMLA
 SectionTagline.displayName = "SectionTagline"
 
 // TITLE ***********************************************************************************************************************************
-export const SectionTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement>>(({className, ...props}, ref) => (
-  <h2 ref={ref} className={TITLE({className})} {...props} />
-))
+export const SectionTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement> & VariantProps<typeof SECTION>>(
+  ({className, level, ...props}, ref) => <h2 ref={ref} className={TITLE({level, className})} {...props} />
+)
 SectionTitle.displayName = "SectionTitle"

@@ -2,6 +2,7 @@ import {getIconCollections, iconsPlugin} from "@egoist/tailwindcss-icons"
 import typography from "@tailwindcss/typography"
 import type {Config} from "tailwindcss"
 import animate from "tailwindcss-animate"
+import {fontFamily} from "tailwindcss/defaultTheme"
 
 const config = {
   darkMode: ["class"],
@@ -16,6 +17,10 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        base: ["var(--font-base)", ...fontFamily.sans],
+        heading: ["var(--font-heading)", ...fontFamily.sans],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

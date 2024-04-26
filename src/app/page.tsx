@@ -1,5 +1,6 @@
 import {Button} from "@/components/ui/button"
 import {Card, CardContent, CardHeader} from "@/components/ui/card"
+import {Section, SectionAside, SectionContent, SectionHeader, SectionMain, SectionTagline, SectionTitle} from "@/components/ui/section"
 import {HEADING, P} from "@/components/ui/typography"
 import {fetchServices} from "@/lib/db"
 import {cn} from "@/lib/utils"
@@ -11,144 +12,160 @@ import HomeBlog from "./_components/blog"
 export default function HomePage() {
   return (
     <main className="flex flex-1 flex-col items-center justify-between">
-      <HeroSection />
-      <ServicesSection />
-      <AboutSection />
+      <HomeHero />
+      <HomeServices />
+      <HomeAbout />
       <HomeBlog />
-      <NewsletterSection />
+      <HomeNewsletter />
     </main>
   )
 }
 
 // HERO ************************************************************************************************************************************
-function HeroSection() {
+function HomeHero() {
   const hero = {
     image: "https://utfs.io/f/3bf8603c-0ce7-4e28-8b0a-a960cd2fa77e-2ihokg.jpeg",
-    title: "Que sont les mémoires cellulaires ?",
+    title: "Que sont les mémoires cellulaires?",
+    content: `
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lectus
+    vestibulum mattis ullamcorper velit. In est ante in nibh mauris cursus mattis molestie. Ultrices in iaculis nunc sed augue lacus
+    viverra vitae.
+    <br />
+    <br />
+    Cras ornare arcu dui vivamus arcu felis. Purus gravida quis blandit turpis. Felis eget nunc lobortis mattis aliquam faucibus purus
+    in.
+    `,
   }
 
   return (
-    <section className="w-full bg-white">
-      <div className="mx-auto grid max-w-screen-xl px-4 py-8 lg:grid-cols-12 lg:gap-8 lg:py-16">
-        <div className="mr-auto flex flex-col place-self-center lg:col-span-7">
-          <h1 className={HEADING({level: 1, class: "mb-8"})}>{hero.title}</h1>
-          <p className="mb-6 max-w-2xl font-light text-gray-500 md:text-lg lg:mb-8 lg:text-xl">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Lectus vestibulum mattis ullamcorper velit. In est ante in nibh mauris cursus mattis molestie. Ultrices in iaculis nunc sed
-            augue lacus viverra vitae.
-            <br />
-            <br />
-            Cras ornare arcu dui vivamus arcu felis. Purus gravida quis blandit turpis. Felis eget nunc lobortis mattis aliquam faucibus
-            purus in.
-          </p>
+    <Section className="bg-white">
+      <SectionContent>
+        <SectionMain className="lg:col-span-6 xl:col-span-7">
+          <SectionHeader className="gap-8 lg:text-left">
+            <SectionTitle level={1} className="text-5xl md:text-6xl">
+              {hero.title}
+            </SectionTitle>
+            <SectionTagline dangerouslySetInnerHTML={{__html: hero.content}} className="text-justify lg:text-left"></SectionTagline>
+          </SectionHeader>
           <Button variant="secondary" asChild className="self-end">
             <Link href="/">
               En savoir plus
               <span className="i-lucide-arrow-right ml-2 h-4 w-4"></span>
             </Link>
           </Button>
-        </div>
-        <div className="hidden overflow-hidden rounded-full lg:col-span-5 lg:mt-0 lg:flex relative">
-          <Image src={hero.image} alt="hero" width={1024} height={1024}></Image>
-        </div>
-      </div>
-    </section>
+        </SectionMain>
+        <SectionAside className="max-w-lg place-self-center lg:col-span-6 xl:col-span-5">
+          <Image src={hero.image} alt="hero" width={1024} height={1024} className="rounded-full"></Image>
+        </SectionAside>
+      </SectionContent>
+    </Section>
   )
 }
 
 // SERVICES ********************************************************************************************************************************
-async function ServicesSection() {
+async function HomeServices() {
   const services = await fetchServices()
 
   return (
-    <section className="w-full bg-neutral-100 py-10">
-      <div className="mx-auto flex max-w-screen-xl flex-col items-center gap-8">
-        <header className="mx-auto max-w-2xl space-y-4 text-center">
-          <h2 className={HEADING({level: 2})}>Mes prestations</h2>
-          <p className={P()}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
-        </header>
-        <ul className="mx-auto grid max-w-screen-xl gap-8 lg:grid-cols-4">
-          {services.toReversed().map(({excerpt, id, image, meetingUri, name, slug, uri}) => (
-            <li key={id} className="flex flex-col gap-5">
-              <Image src={image.url} alt={name} width={1024} height={1024} className="aspect-video rounded-2xl object-cover" />
-              <div className="flex flex-col gap-2 text-center">
-                <h3 className="font-heading text-lg font-bold">{name}</h3>
-                <p className="text-gray-500">{excerpt}</p>
-                <div className="mt-6 flex gap-1">
-                  <Button
-                    asChild
-                    size="icon"
-                    className={cn(slug === "transmutation-des-memoires-cellulaires" && "bg-secondary hover:bg-secondary/80")}
-                  >
-                    <Link href={meetingUri}>
-                      <span className="i-lucide-calendar-heart h-4 w-4"></span>
-                    </Link>
-                  </Button>
-                  <Button
-                    asChild
-                    className={cn(slug === "transmutation-des-memoires-cellulaires" && "bg-secondary hover:bg-secondary/80", "flex-1")}
-                  >
-                    <Link href={uri}>
-                      En savoir plus
-                      <span className="i-lucide-arrow-right ml-2 h-4 w-4"></span>
-                    </Link>
-                  </Button>
+    <Section className="bg-neutral-100">
+      <SectionContent>
+        <SectionMain>
+          <SectionHeader>
+            <SectionTitle>Mes prestations</SectionTitle>
+            <SectionTagline>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </SectionTagline>
+          </SectionHeader>
+          <ul className="mx-auto grid max-w-screen-xl gap-8 lg:grid-cols-4">
+            {services.toReversed().map(({excerpt, id, image, meetingUri, name, slug, uri}) => (
+              <li key={id} className="flex flex-col gap-5">
+                <Image src={image.url} alt={name} width={1024} height={1024} className="aspect-video rounded-2xl object-cover" />
+                <div className="flex-1 flex flex-col gap-2 text-center">
+                  <h3 className="font-heading text-lg font-bold">{name}</h3>
+                  <p className="text-gray-500 flex-1">{excerpt}</p>
+                  <div className="mt-6 flex gap-1">
+                    <Button
+                      asChild
+                      size="icon"
+                      className={cn(slug === "transmutation-des-memoires-cellulaires" && "bg-secondary hover:bg-secondary/80")}
+                    >
+                      <Link href={meetingUri}>
+                        <span className="i-lucide-calendar-heart h-4 w-4"></span>
+                      </Link>
+                    </Button>
+                    <Button
+                      asChild
+                      className={cn(slug === "transmutation-des-memoires-cellulaires" && "bg-secondary hover:bg-secondary/80", "flex-1")}
+                    >
+                      <Link href={uri}>
+                        En savoir plus
+                        <span className="i-lucide-arrow-right ml-2 h-4 w-4"></span>
+                      </Link>
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
+              </li>
+            ))}
+          </ul>
+        </SectionMain>
+      </SectionContent>
+    </Section>
   )
 }
 
 // ABOUT ***********************************************************************************************************************************
-function AboutSection() {
+function HomeAbout() {
+  const about = {
+    image: "https://utfs.io/f/a41c9d86-75d9-4c01-86ed-65076b88001c-pq140f.jpeg",
+    title: "Qui suis-je?",
+    content: `
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lectus
+    vestibulum mattis ullamcorper velit. In est ante in nibh mauris cursus mattis molestie. Ultrices in iaculis nunc sed augue lacus
+    viverra vitae.
+    <br />
+    <br />
+    Cras ornare arcu dui vivamus arcu felis. Purus gravida quis blandit turpis. Felis eget nunc lobortis mattis aliquam faucibus purus
+    in.
+    `,
+  }
+
   return (
-    <section className="w-full bg-white py-10">
-      <Card className="mx-auto flex max-w-screen-xl bg-primary/10">
-        <CardHeader className="flex-none p-12">
-          {/* <Image src={aboutImg} alt="mockup" className="max-w-md rounded-full"></Image> */}
-        </CardHeader>
-        <CardContent className="flex flex-1 flex-col gap-8 p-12 pl-0">
-          <h2 className={HEADING({level: 2})}>Qui suis-je ?</h2>
-          <p className={P()}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Lectus vestibulum mattis ullamcorper velit. In est ante in nibh mauris cursus mattis molestie. Ultrices in iaculis nunc sed
-            augue lacus viverra vitae.
-            <br />
-            <br />
-            Cras ornare arcu dui vivamus arcu felis. Purus gravida quis blandit turpis. Felis eget nunc lobortis mattis aliquam faucibus
-            purus in.
-          </p>
-          <Button asChild className="self-end">
-            <Link href="/">
-              En savoir plus
-              <span className="i-lucide-arrow-right ml-2 h-4 w-4"></span>
-            </Link>
-          </Button>
-        </CardContent>
-      </Card>
-    </section>
+    <Section className="bg-white">
+      <SectionContent>
+        <SectionMain>
+          <Card className="mx-auto flex max-w-screen-xl bg-primary/10">
+            <CardHeader className="flex-none p-12">
+              <Image src={about.image} alt="mockup" width={1024} height={1024} className="max-w-md rounded-full"></Image>
+            </CardHeader>
+            <CardContent className="flex flex-1 flex-col gap-8 p-12 pl-0">
+              <h2 className={HEADING({level: 2})}>{about.title}</h2>
+              <p dangerouslySetInnerHTML={{__html: about.content}} className={P()} />
+              <Button asChild className="self-end">
+                <Link href="/">
+                  En savoir plus
+                  <span className="i-lucide-arrow-right ml-2 h-4 w-4"></span>
+                </Link>
+              </Button>
+            </CardContent>
+          </Card>
+        </SectionMain>
+      </SectionContent>
+    </Section>
   )
 }
 
-
 // NEWSLETTER ******************************************************************************************************************************
-function NewsletterSection() {
+function HomeNewsletter() {
   return (
-    <section className="w-full bg-neutral-100">
-      <div className="mx-auto max-w-screen-xl px-4 py-8 lg:px-6 lg:py-16">
-        <div className="mx-auto flex max-w-screen-md flex-col items-center gap-8 sm:text-center">
-          <header className="mx-auto max-w-2xl space-y-4 text-center">
-            <h2 className={HEADING({level: 2})}>Rejoindre ma newsletter</h2>
-            <p className={P()}>
+    <Section className="bg-neutral-100">
+      <SectionContent>
+        <SectionMain>
+          <SectionHeader className="mx-auto max-w-2xl space-y-4 text-center">
+            <SectionTitle>Rejoindre ma newsletter</SectionTitle>
+            <SectionTagline>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-          </header>
+            </SectionTagline>
+          </SectionHeader>
           <form action="#">
             <div className="mx-auto mb-3 max-w-screen-sm items-center space-y-4 sm:flex sm:space-y-0">
               <div className="relative w-full">
@@ -188,8 +205,8 @@ function NewsletterSection() {
               .
             </div>
           </form>
-        </div>
-      </div>
-    </section>
+        </SectionMain>
+      </SectionContent>
+    </Section>
   )
 }
