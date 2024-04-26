@@ -77,7 +77,7 @@ async function HomeServices() {
             </SectionTagline>
           </SectionHeader>
           <ul className="mx-auto grid max-w-screen-xl gap-8 lg:grid-cols-4">
-            {services.toReversed().map(({excerpt, id, image, meetingUri, name, slug, uri}) => (
+            {services.map(({excerpt, id, image, meetingUri, name, slug, uri}) => (
               <li key={id} className="flex flex-col gap-5">
                 <Image src={image.url} alt={name} width={1024} height={1024} className="aspect-video rounded-2xl object-cover" />
                 <div className="flex-1 flex flex-col gap-2 text-center">
