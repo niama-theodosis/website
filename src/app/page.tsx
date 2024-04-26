@@ -141,7 +141,7 @@ function HomeAbout() {
               <h2 className={HEADING({level: 2})}>{about.title}</h2>
               <p dangerouslySetInnerHTML={{__html: about.content}} className={P()} />
               <Button asChild className="self-end">
-                <Link href="/">
+                <Link href="/qui-suis-je">
                   En savoir plus
                   <span className="i-lucide-arrow-right ml-2 h-4 w-4"></span>
                 </Link>
@@ -160,7 +160,7 @@ function HomeNewsletter() {
     <Section className="bg-neutral-100">
       <SectionContent>
         <SectionMain>
-          <SectionHeader className="mx-auto max-w-2xl space-y-4 text-center">
+          <SectionHeader>
             <SectionTitle>Rejoindre ma newsletter</SectionTitle>
             <SectionTagline>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.

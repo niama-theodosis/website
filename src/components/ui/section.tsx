@@ -10,7 +10,7 @@ export const SECTION = tv({
     BASE: `SECTION bg-background flex flex-col px-8 py-16 w-full`,
     CONTENT: `SECTION_CONTENT grid max-w-screen-xl mx-auto space-y-8 grid-cols-12
     lg:space-x-8 lg:space-y-0`,
-    HEADER: `SECTION_HEADER flex flex-col gap-4 text-center`,
+    HEADER: `SECTION_HEADER flex flex-col gap-4 text-center max-w-2xl mx-auto`,
     MAIN: `SECTION_MAIN flex flex-col gap-8 col-span-12 
     lg:col-span-7 lg:only:col-span-12`,
     TITLE: "SECTION_TITLE",

@@ -1,4 +1,4 @@
 // MAIN ************************************************************************************************************************************
-export default function HomePage() {
-  return <main></main>
+export default function DisclaimerPage() {
+  return <main className="flex-1"></main>
 }
