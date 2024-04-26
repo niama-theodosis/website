@@ -1,7 +1,5 @@
 import {Button} from "@/components/ui/button"
-import {Card, CardContent, CardHeader} from "@/components/ui/card"
 import {Section, SectionAside, SectionContent, SectionHeader, SectionMain, SectionTagline, SectionTitle} from "@/components/ui/section"
-import {HEADING, P} from "@/components/ui/typography"
 import {fetchServices} from "@/lib/db"
 import {cn} from "@/lib/utils"
 import Image from "next/image"
@@ -76,13 +74,13 @@ async function HomeServices() {
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </SectionTagline>
           </SectionHeader>
-          <ul className="mx-auto grid max-w-screen-xl gap-8 lg:grid-cols-4">
+          <ul className="mx-auto grid max-w-screen-xl gap-8 md:grid-cols-2 xl:grid-cols-4">
             {services.map(({excerpt, id, image, meetingUri, name, slug, uri}) => (
               <li key={id} className="flex flex-col gap-5">
                 <Image src={image.url} alt={name} width={1024} height={1024} className="aspect-video rounded-2xl object-cover" />
-                <div className="flex-1 flex flex-col gap-2 text-center">
+                <div className="flex flex-1 flex-col gap-2 text-center">
                   <h3 className="font-heading text-lg font-bold">{name}</h3>
-                  <p className="text-gray-500 flex-1">{excerpt}</p>
+                  <p className="flex-1 text-gray-500">{excerpt}</p>
                   <div className="mt-6 flex gap-1">
                     <Button
                       asChild
@@ -131,23 +129,21 @@ function HomeAbout() {
 
   return (
     <Section className="bg-white">
-      <SectionContent>
-        <SectionMain>
-          <Card className="mx-auto flex max-w-screen-xl bg-primary/10">
-            <CardHeader className="flex-none p-12">
-              <Image src={about.image} alt="mockup" width={1024} height={1024} className="max-w-md rounded-full"></Image>
-            </CardHeader>
-            <CardContent className="flex flex-1 flex-col gap-8 p-12 pl-0">
-              <h2 className={HEADING({level: 2})}>{about.title}</h2>
-              <p dangerouslySetInnerHTML={{__html: about.content}} className={P()} />
-              <Button asChild className="self-end">
-                <Link href="/qui-suis-je">
-                  En savoir plus
-                  <span className="i-lucide-arrow-right ml-2 h-4 w-4"></span>
-                </Link>
-              </Button>
-            </CardContent>
-          </Card>
+      <SectionContent className="bg-primary/10 rounded-2xl p-8">
+        <SectionAside className="max-w-md place-self-center">
+          <Image src={about.image} alt="mockup" width={1024} height={1024} className="rounded-full"></Image>
+        </SectionAside>
+        <SectionMain className="place-self-center">
+          <SectionHeader>
+            <SectionTitle>{about.title}</SectionTitle>
+            <SectionTagline dangerouslySetInnerHTML={{__html: about.content}} />
+          </SectionHeader>
+          <Button asChild className="self-end">
+            <Link href="/qui-suis-je">
+              En savoir plus
+              <span className="i-lucide-arrow-right ml-2 h-4 w-4"></span>
+            </Link>
+          </Button>
         </SectionMain>
       </SectionContent>
     </Section>
