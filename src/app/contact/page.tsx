@@ -40,7 +40,7 @@ async function Aside() {
   const {city, email, phone, street, zipcode} = await fetchContact()
 
   return (
-    <Card className="w-full max-w-sm">
+    <Card className="w-full">
       <CardContent className="flex flex-col gap-8 p-8">
         <div className="flex flex-col items-center gap-4 text-center">
           <div className="h-16 w-16 rounded-xl bg-primary p-4 text-primary-foreground">
