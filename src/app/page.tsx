@@ -77,8 +77,8 @@ async function HomeServices() {
                 <CardHeader className="p-4">
                   <Image src={image.url} alt={name} width={1024} height={1024} className="aspect-video rounded-2xl object-cover" />
                 </CardHeader>
-                <CardContent className="flex-1 p-4">
-                  <h3 className="text-center font-heading text-lg font-bold">{name}</h3>
+                <CardContent className="flex-1 p-4 space-y-4 text-center">
+                  <h3 className="font-heading text-lg font-bold">{name}</h3>
                   <p className="flex-1 text-gray-500">{excerpt}</p>
                 </CardContent>
                 <CardFooter className="gap-1 p-4">
