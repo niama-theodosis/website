@@ -47,7 +47,7 @@ function HomeHero() {
             </SectionTitle>
             <SectionTagline dangerouslySetInnerHTML={{__html: hero.content}} className="text-justify lg:text-left"></SectionTagline>
           </SectionHeader>
-          <MoreButton href="/prestations/transmutation-des-memoires-cellulaires" variant="primary" className="self-end" />
+          <MoreButton href="/prestations/transmutation-des-memoires-cellulaires" variant="primary" size="lg" className="self-end" />
         </SectionMain>
         <SectionAside className="max-w-lg place-self-center lg:col-span-6 xl:col-span-5">
           <Image src={hero.image} alt="hero" width={1024} height={1024} className="col-span-12 rounded-full"></Image>
@@ -78,7 +78,7 @@ async function HomeServices() {
                   <Image src={image.url} alt={name} width={1024} height={1024} className="aspect-video rounded-2xl object-cover" />
                 </CardHeader>
                 <CardContent className="flex-1 p-4">
-                  <h3 className="font-heading text-lg font-bold text-center">{name}</h3>
+                  <h3 className="text-center font-heading text-lg font-bold">{name}</h3>
                   <p className="flex-1 text-gray-500">{excerpt}</p>
                 </CardContent>
                 <CardFooter className="gap-1 p-4">
@@ -86,17 +86,6 @@ async function HomeServices() {
                   <MoreButton href={uri} variant={getServiceVariant(slug)} className="flex-1" />
                 </CardFooter>
               </Card>
-              //   <li key={id} className="flex flex-col gap-5">
-              //   <Image src={image.url} alt={name} width={1024} height={1024} className="aspect-video rounded-2xl object-cover" />
-              //   <div className="flex flex-1 flex-col gap-2 text-center">
-              //     <h3 className="font-heading text-lg font-bold">{name}</h3>
-              //     <p className="flex-1 text-gray-500">{excerpt}</p>
-              //     <div className="mt-6 flex gap-1">
-              //       <MeetingButton service={slug} size="icon" />
-              //       <MoreButton href={uri} variant={getServiceVariant(slug)} className="flex-1" />
-              //     </div>
-              //   </div>
-              // </li>
             ))}
           </ul>
         </SectionMain>
@@ -132,7 +121,7 @@ function HomeAbout() {
             <SectionTitle>{about.title}</SectionTitle>
             <SectionTagline dangerouslySetInnerHTML={{__html: about.content}} />
           </SectionHeader>
-          <MoreButton href="/qui-suis-je" className="self-end" />
+          <MoreButton href="/qui-suis-je" size="lg" className="self-end" />
         </SectionMain>
       </SectionContent>
     </Section>
