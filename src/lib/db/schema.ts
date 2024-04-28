@@ -53,8 +53,8 @@ export const services = pgTable("service", {
     .notNull()
     .references(() => images.id),
   zcal: varchar("zcal", {length: 16}).notNull(),
-  places: placeEnum("place").array(),
-  payments: paymentEnum("payment").array(),
+  places: placeEnum("place").default("remotely").notNull().array(),
+  payments: paymentEnum("payment").default("cash").notNull().array(),
   price: real("price").notNull(),
   duration: interval("duration", {fields: "hour to minute"}).notNull(),
   excerpt: text("excerpt").notNull(),

@@ -1,6 +1,7 @@
 import "@/styles/globals.css"
 
 import {ThemeProvider} from "@/app/_components/theme-provider"
+import {MeetingButton} from "@/components/meeting-button"
 import {Button} from "@/components/ui/button"
 import {fetchContact, fetchServices} from "@/lib/db"
 import {cn} from "@/lib/utils"
@@ -25,7 +26,7 @@ export default function RootLayout({children}: Props) {
     <html lang="fr" suppressHydrationWarning>
       <body
         className={cn(
-          "font-base flex min-h-screen flex-col overflow-x-hidden overflow-y-scroll antialiased",
+          "flex min-h-screen flex-col overflow-x-hidden overflow-y-scroll font-base antialiased",
           poppins.variable,
           quicksand.variable
         )}
@@ -73,12 +74,7 @@ async function Header() {
           </div>
           <Menu services={services} />
           <div className="flex gap-2">
-            <Button variant="secondary" asChild>
-              <Link href="/rendez-vous">
-                <span className="i-lucide-calendar-heart lg:mr-2 h-4 w-4"></span>
-                <span className="hidden lg:block">Prendre rendez-vous</span>
-              </Link>
-            </Button>
+            <MeetingButton variant="primary" />
             {socials.map(({icon, id, url}) => (
               <Button key={id} size="icon" asChild>
                 <a href={url ?? ""} target="_blank">

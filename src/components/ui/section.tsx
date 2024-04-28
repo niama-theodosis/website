@@ -5,7 +5,7 @@ import {HEADING} from "./typography"
 // STYLES **********************************************************************************************************************************
 export const SECTION = tv({
   slots: {
-    ASIDE: `SECTION_ASIDE flex flex-col gap-8 col-span-12 
+    ASIDE: `SECTION_ASIDE grid grid-cols-12 col-span-12 
     lg:col-span-5`,
     BASE: `SECTION bg-background flex flex-col px-8 py-16 w-full`,
     CONTENT: `SECTION_CONTENT grid max-w-screen-xl mx-auto space-y-8 grid-cols-12
@@ -32,27 +32,6 @@ export const SECTION = tv({
 })
 
 const {ASIDE, BASE, CONTENT, HEADER, MAIN, TAGLINE, TITLE} = SECTION()
-
-// export default function Seection({className: C = {}, tagline, title}: Props) {
-//   return (
-//     <section className={BASE({className: C.BASE})}>
-//       <div className={CONTENT({className: C.CONTENT})}>
-//         {title && tagline && (
-//           <div className={HEADER({className: C.HEADER})}>
-//             <h2 className={TITLE({className: C.TITLE})}>{title}</h2>
-//             <p set:html={tagline} class={TAGLINE({className: C.TAGLINE})} />
-//           </div>
-//         )}
-//         {children}
-//       </div>
-//       {Astro.slots.has("aside") && (
-//         <aside class={ASIDE({class: C.ASIDE})}>
-//           <slot name="aside" />
-//         </aside>
-//       )}
-//     </section>
-//   )
-// }
 
 // ASIDE ***********************************************************************************************************************************
 export const SectionAside = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(({className, ...props}, ref) => (

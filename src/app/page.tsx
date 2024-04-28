@@ -1,9 +1,10 @@
+import {MeetingButton} from "@/components/meeting-button"
+import {MoreButton} from "@/components/more-button"
 import {Button} from "@/components/ui/button"
 import {Section, SectionAside, SectionContent, SectionHeader, SectionMain, SectionTagline, SectionTitle} from "@/components/ui/section"
 import {fetchServices} from "@/lib/db"
-import {cn} from "@/lib/utils"
+import {getServiceVariant} from "@/lib/utils"
 import Image from "next/image"
-import Link from "next/link"
 import HomeBlog from "./_components/blog"
 
 // MAIN ************************************************************************************************************************************
@@ -45,12 +46,7 @@ function HomeHero() {
             </SectionTitle>
             <SectionTagline dangerouslySetInnerHTML={{__html: hero.content}} className="text-justify lg:text-left"></SectionTagline>
           </SectionHeader>
-          <Button variant="secondary" asChild className="self-end">
-            <Link href="/prestations/transmutation-des-memoires-cellulaires">
-              En savoir plus
-              <span className="i-lucide-arrow-right ml-2 h-4 w-4"></span>
-            </Link>
-          </Button>
+          <MoreButton href="/prestations/transmutation-des-memoires-cellulaires" variant="primary" className="self-end" />
         </SectionMain>
         <SectionAside className="max-w-lg place-self-center lg:col-span-6 xl:col-span-5">
           <Image src={hero.image} alt="hero" width={1024} height={1024} className="rounded-full"></Image>
@@ -75,31 +71,15 @@ async function HomeServices() {
             </SectionTagline>
           </SectionHeader>
           <ul className="mx-auto grid max-w-screen-xl gap-8 md:grid-cols-2 xl:grid-cols-4">
-            {services.map(({excerpt, id, image, meetingUri, name, slug, uri}) => (
+            {services.map(({excerpt, id, image, name, slug, uri}) => (
               <li key={id} className="flex flex-col gap-5">
                 <Image src={image.url} alt={name} width={1024} height={1024} className="aspect-video rounded-2xl object-cover" />
                 <div className="flex flex-1 flex-col gap-2 text-center">
                   <h3 className="font-heading text-lg font-bold">{name}</h3>
                   <p className="flex-1 text-gray-500">{excerpt}</p>
                   <div className="mt-6 flex gap-1">
-                    <Button
-                      asChild
-                      size="icon"
-                      className={cn(slug === "transmutation-des-memoires-cellulaires" && "bg-secondary hover:bg-secondary/80")}
-                    >
-                      <Link href={meetingUri}>
-                        <span className="i-lucide-calendar-heart h-4 w-4"></span>
-                      </Link>
-                    </Button>
-                    <Button
-                      asChild
-                      className={cn(slug === "transmutation-des-memoires-cellulaires" && "bg-secondary hover:bg-secondary/80", "flex-1")}
-                    >
-                      <Link href={uri}>
-                        En savoir plus
-                        <span className="i-lucide-arrow-right ml-2 h-4 w-4"></span>
-                      </Link>
-                    </Button>
+                    <MeetingButton service={slug} size="icon" />
+                    <MoreButton href={uri} variant={getServiceVariant(slug)} className="flex-1" />
                   </div>
                 </div>
               </li>
@@ -129,7 +109,7 @@ function HomeAbout() {
 
   return (
     <Section className="bg-white">
-      <SectionContent className="bg-primary/10 rounded-2xl p-8">
+      <SectionContent className="rounded-2xl bg-primary/10 p-8">
         <SectionAside className="max-w-md place-self-center">
           <Image src={about.image} alt="mockup" width={1024} height={1024} className="rounded-full"></Image>
         </SectionAside>
@@ -138,12 +118,7 @@ function HomeAbout() {
             <SectionTitle>{about.title}</SectionTitle>
             <SectionTagline dangerouslySetInnerHTML={{__html: about.content}} />
           </SectionHeader>
-          <Button asChild className="self-end">
-            <Link href="/qui-suis-je">
-              En savoir plus
-              <span className="i-lucide-arrow-right ml-2 h-4 w-4"></span>
-            </Link>
-          </Button>
+          <MoreButton href="/qui-suis-je" className="self-end" />
         </SectionMain>
       </SectionContent>
     </Section>
