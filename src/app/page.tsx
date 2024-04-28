@@ -49,7 +49,7 @@ function HomeHero() {
           <MoreButton href="/prestations/transmutation-des-memoires-cellulaires" variant="primary" className="self-end" />
         </SectionMain>
         <SectionAside className="max-w-lg place-self-center lg:col-span-6 xl:col-span-5">
-          <Image src={hero.image} alt="hero" width={1024} height={1024} className="rounded-full"></Image>
+          <Image src={hero.image} alt="hero" width={1024} height={1024} className="rounded-full col-span-12"></Image>
         </SectionAside>
       </SectionContent>
     </Section>
@@ -111,7 +111,7 @@ function HomeAbout() {
     <Section className="bg-white">
       <SectionContent className="rounded-2xl bg-primary/10 p-8">
         <SectionAside className="max-w-md place-self-center">
-          <Image src={about.image} alt="mockup" width={1024} height={1024} className="rounded-full"></Image>
+          <Image src={about.image} alt="mockup" width={1024} height={1024} className="rounded-full col-span-12"></Image>
         </SectionAside>
         <SectionMain className="place-self-center">
           <SectionHeader>

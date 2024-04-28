@@ -60,59 +60,73 @@ export default async function ServicesItemPage({params: {slug}}: ServicesItemPag
   const {duration, image, name, payments, places, price} = item
 
   return (
-    <Section className="flex-1">
+    <>
+      <Section className="flex-1">
+        <SectionContent>
+          <SectionMain>
+            <SectionHeader>
+              <SectionTitle>{name}</SectionTitle>
+            </SectionHeader>
+            <Prose content={intro.content.html} />
+            <Accordion type="multiple" className="w-full">
+              <AccordionItem value="reasons">
+                <AccordionTrigger>Pourquoi opter pour une séance ?</AccordionTrigger>
+                <AccordionContent className="text-base">
+                  <Prose content={reasons.content.html} />
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="proceedings">
+                <AccordionTrigger>Comment celle-ci se déroule-t-elle ?</AccordionTrigger>
+                <AccordionContent className="text-base">
+                  <Prose content={proceedings.content.html} />
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="benefits">
+                <AccordionTrigger>Quels en sont les bienfaits ?</AccordionTrigger>
+                <AccordionContent className="text-base">
+                  <Prose content={benefits.content.html} />
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </SectionMain>
+          <SectionAside className="gap-8">
+            <Image src={image.url} alt={name} width={1024} height={1024} className="col-span-12 rounded-2xl md:col-span-6 lg:col-span-12" />
+            <Card className="col-span-12 md:col-span-6 lg:col-span-12">
+              <CardHeader>
+                <CardTitle>Vous êtes intéressé·e?</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex justify-between">
+                  <ServiceDuration duration={duration} />
+                  <ServicePrice price={price} />
+                </div>
+                <Separator />
+                <ServicePayments payments={payments} />
+                <ServicePlaces places={places} />
+              </CardContent>
+              <CardFooter className="justify-center">
+                <MeetingButton service={slug} size="lg" />
+              </CardFooter>
+            </Card>
+          </SectionAside>
+        </SectionContent>
+      </Section>
+      <OtherServices />
+    </>
+  )
+}
+export type ServicesItemPageProps = {params: {slug: string}}
+
+// DURATION ********************************************************************************************************************************
+export function OtherServices() {
+  return (
+    <Section className="bg-white">
       <SectionContent>
-        <SectionMain>
-          <SectionHeader>
-            <SectionTitle>{name}</SectionTitle>
-          </SectionHeader>
-          <Prose content={intro.content.html} />
-          <Accordion type="multiple" className="w-full">
-            <AccordionItem value="reasons">
-              <AccordionTrigger>Pourquoi opter pour une séance ?</AccordionTrigger>
-              <AccordionContent className="text-base">
-                <Prose content={reasons.content.html} />
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="proceedings">
-              <AccordionTrigger>Comment celle-ci se déroule-t-elle ?</AccordionTrigger>
-              <AccordionContent className="text-base">
-                <Prose content={proceedings.content.html} />
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="benefits">
-              <AccordionTrigger>Quels en sont les bienfaits ?</AccordionTrigger>
-              <AccordionContent className="text-base">
-                <Prose content={benefits.content.html} />
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </SectionMain>
-        <SectionAside className="gap-8">
-          <Image src={image.url} alt={name} width={1024} height={1024} className="rounded-2xl col-span-12 md:col-span-6 lg:col-span-12" />
-          <Card className="col-span-12 md:col-span-6 lg:col-span-12">
-            <CardHeader>
-              <CardTitle>Vous êtes intéressé·e?</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex justify-between">
-                <ServiceDuration duration={duration} />
-                <ServicePrice price={price} />
-              </div>
-              <Separator />
-              <ServicePayments payments={payments} />
-              <ServicePlaces places={places} />
-            </CardContent>
-            <CardFooter className="justify-center">
-              <MeetingButton service={slug} size="lg" />
-            </CardFooter>
-          </Card>
-        </SectionAside>
+        <SectionMain>Autres</SectionMain>
       </SectionContent>
     </Section>
   )
 }
-export type ServicesItemPageProps = {params: {slug: string}}
 
 // DURATION ********************************************************************************************************************************
 export function ServiceDuration({duration}: Pick<Service, "duration">) {
