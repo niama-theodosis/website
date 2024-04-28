@@ -7,7 +7,7 @@ export const MoreButton = React.forwardRef<HTMLButtonElement, MoreButtonProps>((
   return (
     <Button ref={ref} asChild {...props}>
       <Link href={href}>
-        <span className="hidden lg:block">En savoir plus</span>
+        <span>En savoir plus</span>
         <span className="i-lucide-arrow-right ml-2 h-4 w-4"></span>
       </Link>
     </Button>
