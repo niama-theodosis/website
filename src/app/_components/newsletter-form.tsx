@@ -4,18 +4,15 @@ import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert"
 import {Button} from "@/components/ui/button"
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form"
 import {Input} from "@/components/ui/input"
-import {Textarea} from "@/components/ui/textarea"
 import {cn} from "@/lib/utils"
 import {zodResolver} from "@hookform/resolvers/zod"
 import {useEffect, useState} from "react"
 import {useFormState, useFormStatus} from "react-dom"
 import {useForm, useFormContext} from "react-hook-form"
 import {toast} from "sonner"
-import {defaultData, zData, type Data} from "../_utils"
-import {sendEmail, type State} from "../actions"
 
 // ROOT ************************************************************************************************************************************
-export default function ContactForm() {
+export default function NewsletterForm() {
   const [state, action] = useFormState(sendEmail, undefined)
 
   const form = useForm<Data>({
@@ -29,34 +26,6 @@ export default function ContactForm() {
   return (
     <Form {...form}>
       <form action={action} onSubmit={formState.isValid ? undefined : handleSubmit(() => true)} className="flex flex-col gap-8">
-        <div className="flex flex-col gap-8 md:flex-row">
-          <FormField
-            control={control}
-            name="forename"
-            render={({field}) => (
-              <FormItem className="flex-1">
-                <FormLabel>Prénom</FormLabel>
-                <FormControl>
-                  <Input placeholder="Votre prénom..." {...field} />
-                </FormControl>
-                <FormMessage></FormMessage>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={control}
-            name="surname"
-            render={({field}) => (
-              <FormItem className="flex-1">
-                <FormLabel>Nom</FormLabel>
-                <FormControl>
-                  <Input placeholder="Votre nom..." {...field} />
-                </FormControl>
-                <FormMessage></FormMessage>
-              </FormItem>
-            )}
-          />
-        </div>
         <FormField
           control={control}
           name="email"
@@ -65,19 +34,6 @@ export default function ContactForm() {
               <FormLabel>Votre courriel</FormLabel>
               <FormControl>
                 <Input placeholder="Votre courriel..." {...field} />
-              </FormControl>
-              <FormMessage></FormMessage>
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={control}
-          name="message"
-          render={({field}) => (
-            <FormItem>
-              <FormLabel>Votre message</FormLabel>
-              <FormControl>
-                <Textarea placeholder="Votre message..." {...field} rows={8} />
               </FormControl>
               <FormMessage></FormMessage>
             </FormItem>

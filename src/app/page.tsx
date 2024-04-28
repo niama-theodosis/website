@@ -8,7 +8,7 @@ import {getServiceVariant} from "@/lib/utils"
 import Image from "next/image"
 import HomeBlog from "./_components/blog"
 
-// MAIN ************************************************************************************************************************************
+// ROOT ************************************************************************************************************************************
 export default function HomePage() {
   return (
     <main className="flex flex-1 flex-col items-center justify-between">
@@ -38,7 +38,7 @@ function HomeHero() {
   }
 
   return (
-    <Section className="bg-white">
+    <Section variant="default">
       <SectionContent>
         <SectionMain className="lg:col-span-6 xl:col-span-7">
           <SectionHeader className="gap-8 lg:text-left">
@@ -47,7 +47,7 @@ function HomeHero() {
             </SectionTitle>
             <SectionTagline dangerouslySetInnerHTML={{__html: hero.content}} className="text-justify lg:text-left"></SectionTagline>
           </SectionHeader>
-          <MoreButton href="/prestations/transmutation-des-memoires-cellulaires" variant="primary" size="lg" className="self-end" />
+          <MoreButton href="/prestations/alchimie-cellulaire" variant="primary" size="lg" className="self-end" />
         </SectionMain>
         <SectionAside className="max-w-lg place-self-center lg:col-span-6 xl:col-span-5">
           <Image src={hero.image} alt="hero" width={1024} height={1024} className="col-span-12 rounded-full"></Image>
@@ -62,7 +62,7 @@ async function HomeServices() {
   const services = await fetchServices()
 
   return (
-    <Section className="bg-neutral-100">
+    <Section>
       <SectionContent>
         <SectionMain>
           <SectionHeader>
@@ -77,7 +77,7 @@ async function HomeServices() {
                 <CardHeader className="p-4">
                   <Image src={image.url} alt={name} width={1024} height={1024} className="aspect-video rounded-2xl object-cover" />
                 </CardHeader>
-                <CardContent className="flex-1 p-4 space-y-4 text-center">
+                <CardContent className="flex-1 space-y-4 p-4 text-center">
                   <h3 className="font-heading text-lg font-bold">{name}</h3>
                   <p className="flex-1 text-gray-500">{excerpt}</p>
                 </CardContent>
@@ -111,7 +111,7 @@ function HomeAbout() {
   }
 
   return (
-    <Section className="bg-white">
+    <Section variant="default">
       <SectionContent className="rounded-2xl bg-secondary/10 p-8">
         <SectionAside className="max-w-md place-self-center">
           <Image src={about.image} alt="mockup" width={1024} height={1024} className="col-span-12 rounded-full"></Image>
@@ -130,15 +130,18 @@ function HomeAbout() {
 
 // NEWSLETTER ******************************************************************************************************************************
 function HomeNewsletter() {
+  const newsletter = {
+    title: `Rejoindre ma newsletter`,
+    tagline: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
+  }
+
   return (
-    <Section className="bg-neutral-100">
+    <Section>
       <SectionContent>
         <SectionMain>
           <SectionHeader>
-            <SectionTitle>Rejoindre ma newsletter</SectionTitle>
-            <SectionTagline>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </SectionTagline>
+            <SectionTitle>{newsletter.title}</SectionTitle>
+            <SectionTagline>{newsletter.tagline}</SectionTagline>
           </SectionHeader>
           <form action="#">
             <div className="mx-auto mb-3 max-w-screen-sm items-center space-y-4 sm:flex sm:space-y-0">

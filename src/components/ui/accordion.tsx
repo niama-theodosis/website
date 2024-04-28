@@ -3,6 +3,26 @@
 import {cn} from "@/lib/utils"
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
 import * as React from "react"
+import {tv, type VariantProps} from "tailwind-variants"
+
+// STYLES **********************************************************************************************************************************
+export const ACCORDION = tv({
+  slots: {
+    TRIGGER: `text-gray-600 text-lg font-heading flex flex-1 items-center justify-between py-4 font-bold transition-all 
+   [&[data-state=open]>svg]:rotate-180`,
+  },
+  variants: {
+    variant: {
+      primary: {TRIGGER: `hover:text-primary`},
+      secondary: {TRIGGER: `hover:text-secondary`},
+    },
+  },
+  defaultVariants: {
+    variant: "secondary",
+  },
+})
+
+const {TRIGGER} = ACCORDION()
 
 // ROOT ************************************************************************************************************************************
 export const Accordion = AccordionPrimitive.Root
@@ -17,17 +37,10 @@ AccordionItem.displayName = "AccordionItem"
 // TRIGGER *********************************************************************************************************************************
 export const AccordionTrigger = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
->(({className, children, ...props}, ref) => (
+  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> & VariantProps<typeof TRIGGER>
+>(({className, children, variant, ...props}, ref) => (
   <AccordionPrimitive.Header className="flex">
-    <AccordionPrimitive.Trigger
-      ref={ref}
-      className={cn(
-        "text-gray-600 text-lg font-heading flex flex-1 items-center justify-between py-4 font-bold transition-all hover:text-primary [&[data-state=open]>svg]:rotate-180",
-        className
-      )}
-      {...props}
-    >
+    <AccordionPrimitive.Trigger ref={ref} className={TRIGGER({variant, className})} {...props}>
       {children}
       <span className="i-lucide-chevron-down h-4 w-4 shrink-0 transition-transform duration-200"></span>
     </AccordionPrimitive.Trigger>

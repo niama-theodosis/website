@@ -11,7 +11,7 @@ import {hashnode} from "@/lib/hashnode"
 import {StaticPageFragment} from "@/lib/hashnode/fragments"
 import {graphql, readFragment} from "@/lib/hashnode/graphql"
 import type {Service} from "@/lib/schemas"
-import {getServiceDuration, getServicePrice} from "@/lib/utils"
+import {getServiceDuration, getServicePrice, getServiceVariant} from "@/lib/utils"
 import Image from "next/image"
 import {notFound} from "next/navigation"
 
@@ -61,7 +61,7 @@ export default async function ServicesItemPage({params: {slug}}: ServicesItemPag
 
   return (
     <>
-      <Section className="flex-1">
+      <Section className="flex-1 items-start">
         <SectionContent>
           <SectionMain>
             <SectionHeader>
@@ -70,26 +70,26 @@ export default async function ServicesItemPage({params: {slug}}: ServicesItemPag
             <Prose content={intro.content.html} />
             <Accordion type="multiple" className="w-full">
               <AccordionItem value="reasons">
-                <AccordionTrigger>Pourquoi opter pour une séance ?</AccordionTrigger>
+                <AccordionTrigger variant={getServiceVariant(slug)}>Pourquoi opter pour une séance ?</AccordionTrigger>
                 <AccordionContent className="text-base">
                   <Prose content={reasons.content.html} />
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="proceedings">
-                <AccordionTrigger>Comment celle-ci se déroule-t-elle ?</AccordionTrigger>
+                <AccordionTrigger variant={getServiceVariant(slug)}>Comment celle-ci se déroule-t-elle ?</AccordionTrigger>
                 <AccordionContent className="text-base">
                   <Prose content={proceedings.content.html} />
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="benefits">
-                <AccordionTrigger>Quels en sont les bienfaits ?</AccordionTrigger>
+                <AccordionTrigger variant={getServiceVariant(slug)}>Quels en sont les bienfaits ?</AccordionTrigger>
                 <AccordionContent className="text-base">
                   <Prose content={benefits.content.html} />
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
           </SectionMain>
-          <SectionAside className="gap-8">
+          <SectionAside className="gap-8 place-self-start">
             <Image src={image.url} alt={name} width={1024} height={1024} className="col-span-12 rounded-2xl md:col-span-6 lg:col-span-12" />
             <Card className="col-span-12 md:col-span-6 lg:col-span-12">
               <CardHeader>

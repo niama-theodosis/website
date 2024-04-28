@@ -58,9 +58,6 @@ export const services = pgTable("service", {
   price: real("price").notNull(),
   duration: interval("duration", {fields: "hour to minute"}).notNull(),
   excerpt: text("excerpt").notNull(),
-  content: text("content"),
-  proceedings: text("proceedings"),
-  benefits: text("benefits"),
   createdAt: timestamp("created_at")
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),

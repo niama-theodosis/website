@@ -24,7 +24,7 @@ export function rhfErrorsFromZod<TFieldValues extends FieldValues = FieldValues>
 
 // SERVICES ********************************************************************************************************************************
 export function isPrimaryService(serviceSlug?: string) {
-  return serviceSlug === "transmutation-des-memoires-cellulaires"
+  return serviceSlug === "alchimie-cellulaire"
 }
 
 export function getServiceVariant(serviceSlug?: string) {
