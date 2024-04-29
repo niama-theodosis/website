@@ -1,18 +1,14 @@
 import {contacts, images, services} from "@/lib/db/schema"
 import {createSelectSchema} from "drizzle-zod"
+import type {FieldErrors, FieldValues} from "react-hook-form"
 import {z} from "zod"
 
 // IMAGES **********************************************************************************************************************************
 export const zImageDto = createSelectSchema(images)
 
-export type ImageDto = z.infer<typeof zImageDto>
-
 // CONTACTS ********************************************************************************************************************************
 export const zContactDto = createSelectSchema(contacts)
 export const zContact = z.object({...zContactDto.shape, logo: zImageDto.nullish()})
-
-export type ContactDto = z.infer<typeof zContactDto>
-export type Contact = z.infer<typeof zContact>
 
 // SERVICES ********************************************************************************************************************************
 export const PAYMENTS = ["cash", "check", "creditCard"] as const
@@ -31,5 +27,17 @@ export const zService = z.object({...zServiceDto.shape, image: zImageDto}).trans
   return {...data, payments, places, uri, zcalUrl}
 })
 
-export type ServiceDto = z.infer<typeof zServiceDto>
+// TYPES ***********************************************************************************************************************************
+export type Contact = z.infer<typeof zContact>
+export type ContactDto = z.infer<typeof zContactDto>
+export type ImageDto = z.infer<typeof zImageDto>
 export type Service = z.infer<typeof zService>
+export type ServiceDto = z.infer<typeof zServiceDto>
+
+export type ActionState<D extends FieldValues> = {
+  data?: D
+  errors?: FieldErrors<D>
+  status: ActionStatus
+}
+
+export type ActionStatus = 200 | 400 | 422

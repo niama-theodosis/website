@@ -1,19 +1,28 @@
 "use client"
 
-import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert"
+import {Notify} from "@/components/notify"
+import {Submit} from "@/components/submit"
 import {Button} from "@/components/ui/button"
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form"
+import {Form, FormControl, FormDescription, FormField, FormItem, FormMessage} from "@/components/ui/form"
 import {Input} from "@/components/ui/input"
-import {cn} from "@/lib/utils"
 import {zodResolver} from "@hookform/resolvers/zod"
-import {useEffect, useState} from "react"
-import {useFormState, useFormStatus} from "react-dom"
-import {useForm, useFormContext} from "react-hook-form"
-import {toast} from "sonner"
+import Link from "next/link"
+import {useEffect} from "react"
+import {useFormState} from "react-dom"
+import {useForm} from "react-hook-form"
+import {defaultData, zData, type Data} from "../_utils"
+import {subscribeToNewsletter} from "../actions"
+
+// CONST ***********************************************************************************************************************************
+const messages = {
+  200: "Inscription réalisée avec succès",
+  400: "Une erreur est survenue",
+  422: "Veuillez corriger les erreurs ci-dessus",
+}
 
 // ROOT ************************************************************************************************************************************
 export default function NewsletterForm() {
-  const [state, action] = useFormState(sendEmail, undefined)
+  const [state, action] = useFormState(subscribeToNewsletter, undefined)
 
   const form = useForm<Data>({
     mode: "onTouched",
@@ -23,6 +32,10 @@ export default function NewsletterForm() {
   })
   const {control, formState, handleSubmit} = form
 
+  useEffect(() => {
+    if (state?.status === 200) form.reset() // FIXME: warning in RHF
+  }, [form, state?.status]) // FIXME: warning in RHF
+
   return (
     <Form {...form}>
       <form action={action} onSubmit={formState.isValid ? undefined : handleSubmit(() => true)} className="flex flex-col gap-8">
@@ -31,60 +44,27 @@ export default function NewsletterForm() {
           name="email"
           render={({field}) => (
             <FormItem>
-              <FormLabel>Votre courriel</FormLabel>
-              <FormControl>
-                <Input placeholder="Votre courriel..." {...field} />
-              </FormControl>
+              <div className="flex w-full items-center">
+                <FormControl>
+                  <div className="relative flex w-full items-center">
+                    <span className="i-mdi-envelope absolute left-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input placeholder="Votre courriel..." {...field} className="rounded-r-none pl-9" />
+                  </div>
+                </FormControl>
+                <Submit label="Je m'inscris" className="rounded-l-none" />
+              </div>
+              <FormDescription>
+                La protection de vos données est
+                <Button asChild variant="link" className="h-auto px-1 py-0">
+                  <Link href="/mentions-legales">notre priorité.</Link>
+                </Button>
+              </FormDescription>
               <FormMessage></FormMessage>
             </FormItem>
           )}
         />
-        <Notify status={state?.status} />
-        <Submit />
+        <Notify messages={messages} status={state?.status} />
       </form>
     </Form>
   )
 }
-
-// SUBMIT **********************************************************************************************************************************
-export function Submit() {
-  const {pending} = useFormStatus()
-
-  return (
-    <Button type="submit" disabled={pending} className="flex gap-2 self-end text-base">
-      <span className={cn("h-4 w-4", pending ? "i-lucide-loader animate-spin" : "i-lucide-send")}></span>
-      <span>Envoyer</span>
-    </Button>
-  )
-}
-
-// NOTIFY **********************************************************************************************************************************
-const messages = {
-  200: "Votre message a été envoyé avec succès",
-  400: "Une erreur est survenue",
-  422: "Veuillez corriger les erreurs ci-dessus",
-}
-
-export function Notify({status}: {status?: State["status"]}) {
-  const {reset} = useFormContext()
-  const [noJs, setNoJs] = useState(true)
-
-  useEffect(() => setNoJs(false), [])
-
-  useEffect(() => {
-    if (status === 200) {
-      reset()
-      toast.success(messages[200])
-    } else toast.error(messages[status ?? 400])
-  }, [reset, status])
-
-  if (noJs || !status) return null
-  return (
-    <Alert variant={status === 200 ? "success" : "destructive"}>
-      <AlertTitle>{status === 200 ? "Bravo !" : "Oups !"}</AlertTitle>
-      <AlertDescription>{messages[status]}</AlertDescription>
-    </Alert>
-  )
-}
-
-

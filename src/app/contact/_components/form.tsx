@@ -1,18 +1,23 @@
 "use client"
 
-import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert"
-import {Button} from "@/components/ui/button"
+import {Notify} from "@/components/notify"
+import {Submit} from "@/components/submit"
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form"
 import {Input} from "@/components/ui/input"
 import {Textarea} from "@/components/ui/textarea"
-import {cn} from "@/lib/utils"
 import {zodResolver} from "@hookform/resolvers/zod"
-import {useEffect, useState} from "react"
-import {useFormState, useFormStatus} from "react-dom"
-import {useForm, useFormContext} from "react-hook-form"
-import {toast} from "sonner"
+import {useEffect} from "react"
+import {useFormState} from "react-dom"
+import {useForm} from "react-hook-form"
 import {defaultData, zData, type Data} from "../_utils"
-import {sendEmail, type State} from "../actions"
+import {sendEmail} from "../actions"
+
+// CONSTS **********************************************************************************************************************************
+const messages = {
+  200: "Votre message a été envoyé avec succès",
+  400: "Une erreur est survenue",
+  422: "Veuillez corriger les erreurs ci-dessus",
+}
 
 // ROOT ************************************************************************************************************************************
 export default function ContactForm() {
@@ -25,6 +30,10 @@ export default function ContactForm() {
     defaultValues: state?.data ?? defaultData,
   })
   const {control, formState, handleSubmit} = form
+
+  useEffect(() => {
+    if (state?.status === 200) form.reset() // FIXME: warning in RHF
+  }, [form, state?.status]) // FIXME: warning in RHF
 
   return (
     <Form {...form}>
@@ -83,52 +92,9 @@ export default function ContactForm() {
             </FormItem>
           )}
         />
-        <Notify status={state?.status} />
-        <Submit />
+        <Notify messages={messages} status={state?.status} />
+        <Submit label="Envoyer" className="self-end text-base" />
       </form>
     </Form>
   )
 }
-
-// SUBMIT **********************************************************************************************************************************
-export function Submit() {
-  const {pending} = useFormStatus()
-
-  return (
-    <Button type="submit" disabled={pending} className="flex gap-2 self-end text-base">
-      <span className={cn("h-4 w-4", pending ? "i-lucide-loader animate-spin" : "i-lucide-send")}></span>
-      <span>Envoyer</span>
-    </Button>
-  )
-}
-
-// NOTIFY **********************************************************************************************************************************
-const messages = {
-  200: "Votre message a été envoyé avec succès",
-  400: "Une erreur est survenue",
-  422: "Veuillez corriger les erreurs ci-dessus",
-}
-
-export function Notify({status}: {status?: State["status"]}) {
-  const {reset} = useFormContext()
-  const [noJs, setNoJs] = useState(true)
-
-  useEffect(() => setNoJs(false), [])
-
-  useEffect(() => {
-    if (status === 200) {
-      reset()
-      toast.success(messages[200])
-    } else toast.error(messages[status ?? 400])
-  }, [reset, status])
-
-  if (noJs || !status) return null
-  return (
-    <Alert variant={status === 200 ? "success" : "destructive"}>
-      <AlertTitle>{status === 200 ? "Bravo !" : "Oups !"}</AlertTitle>
-      <AlertDescription>{messages[status]}</AlertDescription>
-    </Alert>
-  )
-}
-
-

@@ -1,12 +1,11 @@
 "use server"
 
+import type {ActionState} from "@/lib/schemas"
 import {rhfErrorsFromZod} from "@/lib/utils"
-import type {FieldErrors} from "react-hook-form"
-import type {z} from "zod"
 import {zData, type Data} from "./_utils"
 
 // SEND EMAIL ******************************************************************************************************************************
-export async function sendEmail(prevState: State | undefined, formData: FormData): Promise<State> {
+export async function sendEmail(_prevState: ActionState<Data> | undefined, formData: FormData): Promise<ActionState<Data>> {
   try {
     // await new Promise((r) => setTimeout(r, 2000))
     const data = Object.fromEntries(formData.entries()) as Data
@@ -27,9 +26,3 @@ export async function sendEmail(prevState: State | undefined, formData: FormData
   }
 }
 
-// TYPES ***********************************************************************************************************************************
-export type State = {
-  data?: z.infer<typeof zData>
-  errors?: FieldErrors<Data>
-  status: 200 | 400 | 422
-}
