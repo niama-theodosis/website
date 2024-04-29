@@ -51,7 +51,7 @@ export default function NewsletterForm() {
                     <Input placeholder="Votre courriel..." {...field} className="rounded-r-none pl-9" />
                   </div>
                 </FormControl>
-                <Submit label="Je m'inscris" className="rounded-l-none" />
+                <Submit label="Je m'inscris" icon="i-mdi-register" className="rounded-l-none" />
               </div>
               <FormDescription>
                 La protection de vos données est

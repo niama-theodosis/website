@@ -4,12 +4,12 @@ import {useFormStatus} from "react-dom"
 import {Button, type ButtonProps} from "./ui/button"
 
 // ROOT ************************************************************************************************************************************
-export const Submit = React.forwardRef<HTMLButtonElement, SubmitProps>(({className, label, ...props}, ref) => {
+export const Submit = React.forwardRef<HTMLButtonElement, SubmitProps>(({className, icon,  label, ...props}, ref) => {
   const {pending} = useFormStatus()
 
   return (
     <Button ref={ref} type="submit" disabled={pending} className={cn("flex gap-2", className)} {...props}>
-      <span className={cn("h-4 w-4", pending ? "i-lucide-loader animate-spin" : "i-lucide-send")}></span>
+      <span className={cn("h-4 w-4", pending ? "i-lucide-loader animate-spin" : icon)}></span>
       <span>{label}</span>
     </Button>
   )
@@ -17,4 +17,4 @@ export const Submit = React.forwardRef<HTMLButtonElement, SubmitProps>(({classNa
 Submit.displayName = "Submit"
 
 // TYPES ***********************************************************************************************************************************
-export type SubmitProps = Omit<ButtonProps, "asChild" | "children" | "type" | "disabled"> & {label: string}
+export type SubmitProps = Omit<ButtonProps, "asChild" | "children" | "type" | "disabled"> & {icon: string ;label: string}

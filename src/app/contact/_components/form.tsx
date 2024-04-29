@@ -93,7 +93,7 @@ export default function ContactForm() {
           )}
         />
         <Notify messages={messages} state={state} />
-        <Submit label="Envoyer" className="self-end text-base" />
+        <Submit label="Envoyer" icon="i-lucide-send" className="self-end text-base" />
       </form>
     </Form>
   )
