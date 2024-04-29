@@ -20,11 +20,11 @@ const Query = graphql(
 
 // MAIN ************************************************************************************************************************************
 export default async function AboutPage() {
-  const data = await hashnode.request(Query, {host: env.HASHNODE_PUBLICATION_HOST, first: 20})
+  const data = await hashnode.request(Query, {host: env.HASHNODE_PUBLICATION_HOST})
   if (!data.publication?.staticPage) notFound()
   const {content, title} = readFragment(StaticPageFragment, data.publication.staticPage)
   return (
-    <article className="prose prose-headings:font-heading lg:prose-lg mx-auto max-w-screen-xl flex-1 py-16 px-8">
+    <article className="prose prose-headings:font-heading mx-auto max-w-screen-xl flex-1 py-16 px-8">
       <h1>{title}</h1>
       <div dangerouslySetInnerHTML={{__html: content.html}}></div>
     </article>
