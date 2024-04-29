@@ -34,7 +34,7 @@ export type ImageDto = z.infer<typeof zImageDto>
 export type Service = z.infer<typeof zService>
 export type ServiceDto = z.infer<typeof zServiceDto>
 
-export type ActionState<D extends FieldValues> = {
+export type ActionState<D extends FieldValues = FieldValues> = {
   data?: D
   errors?: FieldErrors<D>
   status: ActionStatus

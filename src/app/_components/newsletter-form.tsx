@@ -30,11 +30,11 @@ export default function NewsletterForm() {
     errors: state?.errors,
     defaultValues: state?.data ?? defaultData,
   })
-  const {control, formState, handleSubmit} = form
+  const {control, formState, handleSubmit, reset} = form
 
   useEffect(() => {
-    if (state?.status === 200) form.reset() // FIXME: warning in RHF
-  }, [form, state?.status]) // FIXME: warning in RHF
+    if (state?.status === 200) reset() // FIXME: warning in RHF
+  }, [reset, state]) // FIXME: warning in RHF
 
   return (
     <Form {...form}>
@@ -63,7 +63,7 @@ export default function NewsletterForm() {
             </FormItem>
           )}
         />
-        <Notify messages={messages} status={state?.status} />
+        <Notify messages={messages} state={state} />
       </form>
     </Form>
   )
