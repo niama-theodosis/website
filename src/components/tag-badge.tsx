@@ -1,6 +1,6 @@
 import {graphql, readFragment, type FragmentOf} from "@/lib/hashnode/graphql"
 import Link from "next/link"
-import {badgeVariants} from "./ui/badge"
+import {BADGE} from "./ui/badge"
 
 // GQL *************************************************************************************************************************************
 export const TagBadgeFragment = graphql(`
@@ -14,7 +14,7 @@ export const TagBadgeFragment = graphql(`
 export default function TagBadge({data}: Props) {
   const {name, slug} = readFragment(TagBadgeFragment, data)
   return (
-    <Link href={`/blog/tags/${slug}`} className={badgeVariants()}>
+    <Link href={`/blog/tags/${slug}`} className={BADGE()}>
       {name}
     </Link>
   )
