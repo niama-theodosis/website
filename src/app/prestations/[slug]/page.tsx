@@ -117,8 +117,8 @@ export default async function ServicesItemPage({params: {slug}}: ServicesItemPag
 }
 export type ServicesItemPageProps = {params: {slug: string}}
 
-// DURATION ********************************************************************************************************************************
-export function OtherServices() {
+// OTHER SERVICES **************************************************************************************************************************
+function OtherServices() {
   return (
     <Section className="bg-white">
       <SectionContent>
@@ -129,7 +129,7 @@ export function OtherServices() {
 }
 
 // DURATION ********************************************************************************************************************************
-export function ServiceDuration({duration}: Pick<Service, "duration">) {
+function ServiceDuration({duration}: Pick<Service, "duration">) {
   return (
     <div className="space-x-2 text-lg">
       <span className="font-bold">Durée</span>
@@ -139,7 +139,7 @@ export function ServiceDuration({duration}: Pick<Service, "duration">) {
 }
 
 // PAYMENTS ********************************************************************************************************************************
-export function ServicePayments({payments}: Pick<Service, "payments">) {
+function ServicePayments({payments}: Pick<Service, "payments">) {
   const i18n = new Map(
     Object.entries({
       cash: "espèce",
@@ -161,7 +161,7 @@ export function ServicePayments({payments}: Pick<Service, "payments">) {
 }
 
 // PLACES **********************************************************************************************************************************
-export function ServicePlaces({places}: Pick<Service, "places">) {
+function ServicePlaces({places}: Pick<Service, "places">) {
   const i18n = new Map(
     Object.entries({
       faceToFace: "physique",
@@ -182,7 +182,7 @@ export function ServicePlaces({places}: Pick<Service, "places">) {
 }
 
 // PRICE ***********************************************************************************************************************************
-export function ServicePrice({price}: Pick<Service, "price">) {
+function ServicePrice({price}: Pick<Service, "price">) {
   return (
     <div className="space-x-2 text-lg">
       <span className="font-bold ">Prix</span>

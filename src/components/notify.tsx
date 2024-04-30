@@ -30,4 +30,4 @@ export function Notify({messages, state}: NotifyProps) {
 }
 
 // TYPES ***********************************************************************************************************************************
-export type NotifyProps = {messages: Record<ActionStatus, string>; state?: ActionState}
+export type NotifyProps = {messages: Partial<Record<ActionStatus, string>>; state?: ActionState}
