@@ -16,8 +16,8 @@ export function Notify({messages, state}: NotifyProps) {
     if (!state?.status) return
     if (state?.status === 200) {
       // reset() // FIXME: warning in RHF
-      toast.success(messages[200])
-    } else toast.error(messages[state?.status ?? 400])
+      toast.success("Succès", {description: messages[200]})
+    } else toast.error("Erreur", {description: messages[state?.status ?? 400]})
   }, [messages, state])
 
   if (!noJs || !state?.status) return null

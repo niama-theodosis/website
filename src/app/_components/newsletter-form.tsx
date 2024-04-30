@@ -15,9 +15,10 @@ import {subscribeToNewsletter} from "../actions"
 
 // CONST ***********************************************************************************************************************************
 const messages = {
-  200: "Inscription réalisée avec succès",
-  400: "Une erreur est survenue",
-  422: "Veuillez corriger les erreurs ci-dessus",
+  200: "Veuillez valider votre inscription dans le courriel reçu.",
+  400: "Veuillez réessayer ultérieurement.",
+  409: "Vous êtes déjà inscrit·e.",
+  422: "Veuillez corriger les erreurs ci-dessus.",
 }
 
 // ROOT ************************************************************************************************************************************
@@ -33,7 +34,7 @@ export default function NewsletterForm() {
   const {control, formState, handleSubmit, reset} = form
 
   useEffect(() => {
-    if (state?.status === 200) reset() // FIXME: warning in RHF
+    if ([200, 409].includes(state?.status ?? 400)) reset() // FIXME: warning in RHF
   }, [reset, state]) // FIXME: warning in RHF
 
   return (

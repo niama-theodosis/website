@@ -40,4 +40,4 @@ export type ActionState<D extends FieldValues = FieldValues> = {
   status: ActionStatus
 }
 
-export type ActionStatus = 200 | 400 | 422
+export type ActionStatus = 200 | 400 | 409 | 422
