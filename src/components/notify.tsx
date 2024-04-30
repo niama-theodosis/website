@@ -23,7 +23,7 @@ export function Notify({messages, state}: NotifyProps) {
   if (!noJs || !state?.status) return null
   return (
     <Alert variant={state?.status === 200 ? "success" : "destructive"}>
-      <AlertTitle>{state?.status === 200 ? "Bravo !" : "Oups !"}</AlertTitle>
+      <AlertTitle>{state?.status === 200 ? "Succès" : "Erreur"}</AlertTitle>
       <AlertDescription>{messages[state?.status]}</AlertDescription>
     </Alert>
   )
