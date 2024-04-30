@@ -16,9 +16,9 @@ import Image from "next/image"
 import {notFound} from "next/navigation"
 
 // GQL *************************************************************************************************************************************
-const Query = graphql(
+const ServiceSectionsQuery = graphql(
   `
-    query PageByPublication($host: String!, $benefits: String!, $intro: String!, $proceedings: String!, $reasons: String!) {
+    query ServiceSections($host: String!, $benefits: String!, $intro: String!, $proceedings: String!, $reasons: String!) {
       publication(host: $host) {
         benefits: staticPage(slug: $benefits) {
           ...StaticPage
@@ -38,10 +38,13 @@ const Query = graphql(
   [StaticPageFragment]
 )
 
+// STATIC **********************************************************************************************************************************
+export {fetchServiceSlugs as generateStaticParams} from "@/lib/db"
+  
 // MAIN ************************************************************************************************************************************
 export default async function ServicesItemPage({params: {slug}}: ServicesItemPageProps) {
   const [{publication}, item] = await Promise.all([
-    hashnode.request(Query, {
+    hashnode.request(ServiceSectionsQuery, {
       host: env.HASHNODE_PUBLICATION_HOST,
       benefits: `prestations-${slug}-bienfaits`,
       intro: `prestations-${slug}-introduction`,

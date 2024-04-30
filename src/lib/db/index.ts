@@ -19,6 +19,8 @@ export const fetchServices = cache(async () => {
   return zService.array().parse(serviceDtos)
 })
 
+export const fetchServiceSlugs = cache(async () => db.query.services.findMany({columns: {slug: true}}))
+
 export const fetchService = cache(async (slug: string) => {
   const serviceDto = await db.query.services.findFirst({with: {image: true}, where: (service, {eq}) => eq(service.slug, slug)})
   return zService.optional().parse(serviceDto)

@@ -4,7 +4,10 @@ import {fetchService} from "@/lib/db"
 import Link from "next/link"
 import {notFound} from "next/navigation"
 
-// MAIN ************************************************************************************************************************************
+// STATIC **********************************************************************************************************************************
+export {fetchServiceSlugs as generateStaticParams} from "@/lib/db"
+
+// ROOT ************************************************************************************************************************************
 export default async function MeetingItemPage({params: {slug}}: Props) {
   const item = await fetchService(slug)
   const {name, zcalUrl} = item ?? notFound()
