@@ -6,9 +6,9 @@ import {hashnode} from "@/lib/hashnode"
 import {graphql} from "@/lib/hashnode/graphql"
 
 // GQL *************************************************************************************************************************************
-export const Query = graphql(
+export const PostsQuery = graphql(
   `
-    query PostsByPublication($host: String!, $first: Int!, $after: String) {
+    query Posts($host: String!, $first: Int!, $after: String) {
       publication(host: $host) {
         posts(first: $first, after: $after) {
           edges {
@@ -25,7 +25,7 @@ export const Query = graphql(
 
 // MAIN ************************************************************************************************************************************
 export default async function HomeBlog() {
-  const data = await hashnode.request(Query, {host: env.HASHNODE_PUBLICATION_HOST, first: 3})
+  const data = await hashnode.request(PostsQuery, {host: env.HASHNODE_PUBLICATION_HOST, first: 3})
   const posts = data.publication?.posts.edges ?? []
 
   return (

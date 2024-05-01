@@ -7,9 +7,9 @@ import {PageInfoFragment} from "@/lib/hashnode/fragments"
 import {graphql} from "@/lib/hashnode/graphql"
 
 // GQL *************************************************************************************************************************************
-const Query = graphql(
+const PostsQuery = graphql(
   `
-    query PostsByPublication($host: String!, $first: Int!, $after: String) {
+    query Posts($host: String!, $first: Int!, $after: String) {
       publication(host: $host) {
         about {
           text
@@ -34,7 +34,7 @@ const Query = graphql(
 
 // MAIN ************************************************************************************************************************************
 export default async function BlogPage() {
-  const data = await hashnode.request(Query, {host: env.HASHNODE_PUBLICATION_HOST, first: 20})
+  const data = await hashnode.request(PostsQuery, {host: env.HASHNODE_PUBLICATION_HOST, first: 20})
   const title = data.publication?.displayTitle ?? data.publication?.title ?? "Blog"
   const tagline = data.publication?.about?.text ?? "Découvrez nos articles"
   const posts = data.publication?.posts.edges ?? []

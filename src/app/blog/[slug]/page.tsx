@@ -6,9 +6,9 @@ import Image from "next/image"
 import {notFound} from "next/navigation"
 
 // GQL *************************************************************************************************************************************
-const Query = graphql(
+const PostQuery = graphql(
   `
-    query SinglePostByPublication($slug: String!, $host: String!) {
+    query Post($slug: String!, $host: String!) {
       publication(host: $host) {
         ...Publication
         post(slug: $slug) {
@@ -22,7 +22,7 @@ const Query = graphql(
 
 // DATA ************************************************************************************************************************************
 export default async function BlogArticlePage({params: {slug}}: Props) {
-  const data = await hashnode.request(Query, {host: env.HASHNODE_PUBLICATION_HOST, slug})
+  const data = await hashnode.request(PostQuery, {host: env.HASHNODE_PUBLICATION_HOST, slug})
   if (!data?.publication?.post) notFound()
   const {content, subtitle, title, ...r} = readFragment(PostFragment, data.publication.post)
   const coverImage = r.coverImage?.url ?? "TODO: Add default cover image"

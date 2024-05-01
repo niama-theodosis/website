@@ -15,6 +15,8 @@ import {getServiceDuration, getServicePrice, getServiceVariant} from "@/lib/util
 import Image from "next/image"
 import {notFound} from "next/navigation"
 
+export const revalidate = 60
+
 // GQL *************************************************************************************************************************************
 const ServiceSectionsQuery = graphql(
   `

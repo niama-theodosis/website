@@ -5,9 +5,9 @@ import {graphql, readFragment} from "@/lib/hashnode/graphql"
 import {notFound} from "next/navigation"
 
 // GQL *************************************************************************************************************************************
-const Query = graphql(
+const PageAboutQuery = graphql(
   `
-    query PageByPublication($host: String!) {
+    query PageAbout($host: String!) {
       publication(host: $host) {
         staticPage(slug: "qui-suis-je") {
           ...StaticPage
@@ -20,7 +20,7 @@ const Query = graphql(
 
 // MAIN ************************************************************************************************************************************
 export default async function AboutPage() {
-  const data = await hashnode.request(Query, {host: env.HASHNODE_PUBLICATION_HOST})
+  const data = await hashnode.request(PageAboutQuery, {host: env.HASHNODE_PUBLICATION_HOST})
   if (!data.publication?.staticPage) notFound()
   const {content, title} = readFragment(StaticPageFragment, data.publication.staticPage)
   return (

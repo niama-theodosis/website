@@ -6,9 +6,9 @@ import {graphql} from "@/lib/hashnode/graphql"
 import {notFound} from "next/navigation"
 
 // GQL *************************************************************************************************************************************
-const Query = graphql(
+const PostsByTagQuery = graphql(
   `
-    query PostsByPublication($host: String!, $first: Int!, $after: String) {
+    query PostsByTag($host: String!, $first: Int!, $after: String) {
       publication(host: $host) {
         ...Publication
         posts(first: $first, after: $after) {
@@ -31,7 +31,7 @@ const Query = graphql(
 export default async function BlogTagPage({params: {tag}}: Props) {
   if (!tag) return notFound()
 
-  const data = await hashnode.request(Query, {first: 20, host: env.HASHNODE_PUBLICATION_HOST})
+  const data = await hashnode.request(PostsByTagQuery, {first: 20, host: env.HASHNODE_PUBLICATION_HOST})
   const posts = data.publication?.posts.edges ?? []
 
   return (

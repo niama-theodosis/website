@@ -5,9 +5,9 @@ import {graphql, readFragment} from "@/lib/hashnode/graphql"
 import {notFound} from "next/navigation"
 
 // GQL *************************************************************************************************************************************
-const Query = graphql(
+const PageDisclaimerQuery = graphql(
   `
-    query PageByPublication($host: String!) {
+    query PageDisclaimer($host: String!) {
       publication(host: $host) {
         staticPage(slug: "mentions-legales") {
           ...StaticPage
@@ -20,7 +20,7 @@ const Query = graphql(
 
 // ROOT ************************************************************************************************************************************
 export default async function DisclaimerPage() {
-  const data = await hashnode.request(Query, {host: env.HASHNODE_PUBLICATION_HOST})
+  const data = await hashnode.request(PageDisclaimerQuery, {host: env.HASHNODE_PUBLICATION_HOST})
   if (!data.publication?.staticPage) notFound()
   const {content, title} = readFragment(StaticPageFragment, data.publication.staticPage)
   return (
