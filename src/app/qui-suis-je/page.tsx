@@ -4,6 +4,9 @@ import {StaticPageFragment} from "@/lib/hashnode/fragments"
 import {graphql, readFragment} from "@/lib/hashnode/graphql"
 import {notFound} from "next/navigation"
 
+// CACHE ***********************************************************************************************************************************
+export const revalidate = 0 // 86400 // 1 day
+
 // GQL *************************************************************************************************************************************
 const PageAboutQuery = graphql(
   `
