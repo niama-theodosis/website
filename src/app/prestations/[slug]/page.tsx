@@ -137,7 +137,7 @@ async function OtherServices({slug}: {slug: string}) {
               Vous pouvez également être intéressé·e par
             </SectionTagline>
           </SectionHeader>
-          <div className="mx-auto grid max-w-screen-xl gap-8 md:grid-cols-3 xl:grid-cols-3">
+          <div className="mx-auto grid max-w-screen-xl gap-8 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3">
             {services.map((service) => (
               <ServiceCard key={service.id} service={service} />
             ))}
