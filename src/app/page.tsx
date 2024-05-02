@@ -1,13 +1,10 @@
-import {MeetingButton} from "@/components/meeting-button"
 import {MoreButton} from "@/components/more-button"
-import {Card, CardContent, CardFooter, CardHeader} from "@/components/ui/card"
 import {Section, SectionAside, SectionContent, SectionHeader, SectionMain, SectionTagline, SectionTitle} from "@/components/ui/section"
 import {Toaster} from "@/components/ui/sonner"
-import {fetchServices} from "@/lib/db"
-import {getServiceVariant} from "@/lib/utils"
 import Image from "next/image"
 import HomeBlog from "./_components/blog"
 import NewsletterForm from "./_components/newsletter-form"
+import HomeServices from "./_components/services"
 
 // ROOT ************************************************************************************************************************************
 export default function HomePage() {
@@ -53,43 +50,6 @@ function HomeHero() {
         <SectionAside className="max-w-lg place-self-center lg:col-span-6 xl:col-span-5">
           <Image src={hero.image} alt="hero" width={1024} height={1024} className="col-span-12 rounded-full"></Image>
         </SectionAside>
-      </SectionContent>
-    </Section>
-  )
-}
-
-// SERVICES ********************************************************************************************************************************
-async function HomeServices() {
-  const services = await fetchServices()
-
-  return (
-    <Section>
-      <SectionContent>
-        <SectionMain>
-          <SectionHeader>
-            <SectionTitle>Mes prestations</SectionTitle>
-            <SectionTagline>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </SectionTagline>
-          </SectionHeader>
-          <ul className="mx-auto grid max-w-screen-xl gap-8 md:grid-cols-2 xl:grid-cols-4">
-            {services.map(({excerpt, id, image, name, slug, uri}) => (
-              <Card key={id} className="flex flex-col">
-                <CardHeader className="p-4">
-                  <Image src={image.url} alt={name} width={1024} height={1024} className="aspect-video rounded-2xl object-cover" />
-                </CardHeader>
-                <CardContent className="flex-1 space-y-4 p-4 text-center">
-                  <h3 className="font-heading text-lg font-bold">{name}</h3>
-                  <p className="flex-1 text-gray-500">{excerpt}</p>
-                </CardContent>
-                <CardFooter className="gap-1 p-4">
-                  <MeetingButton service={slug} size="icon" />
-                  <MoreButton href={uri} variant={getServiceVariant(slug)} className="flex-1" />
-                </CardFooter>
-              </Card>
-            ))}
-          </ul>
-        </SectionMain>
       </SectionContent>
     </Section>
   )

@@ -1,12 +1,13 @@
 import {MeetingButton} from "@/components/meeting-button"
+import ServiceCard from "@/components/service-card"
 import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from "@/components/ui/accordion"
 import {Badge} from "@/components/ui/badge"
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card"
 import {Prose} from "@/components/ui/prose"
-import {Section, SectionAside, SectionContent, SectionHeader, SectionMain, SectionTitle} from "@/components/ui/section"
+import {Section, SectionAside, SectionContent, SectionHeader, SectionMain, SectionTagline, SectionTitle} from "@/components/ui/section"
 import {Separator} from "@/components/ui/separator"
 import {env} from "@/env"
-import {fetchService} from "@/lib/db"
+import {fetchOtherServices, fetchService} from "@/lib/db"
 import {hashnode} from "@/lib/hashnode"
 import {StaticPageFragment} from "@/lib/hashnode/fragments"
 import {graphql, readFragment} from "@/lib/hashnode/graphql"
@@ -117,18 +118,31 @@ export default async function ServicesItemPage({params: {slug}}: ServicesItemPag
           </SectionAside>
         </SectionContent>
       </Section>
-      <OtherServices />
+      <OtherServices slug={slug} />
     </>
   )
 }
 export type ServicesItemPageProps = {params: {slug: string}}
 
 // OTHER SERVICES **************************************************************************************************************************
-function OtherServices() {
+async function OtherServices({slug}: {slug: string}) {
+  const services = await fetchOtherServices(slug)
   return (
     <Section className="bg-white">
       <SectionContent>
-        <SectionMain>Autres</SectionMain>
+        <SectionMain>
+        <SectionHeader>
+            <SectionTitle>Mes autres prestations</SectionTitle>
+            <SectionTagline>
+              Vous pouvez également être intéressé·e par
+            </SectionTagline>
+          </SectionHeader>
+          <div className="mx-auto grid max-w-screen-xl gap-8 md:grid-cols-3 xl:grid-cols-3">
+            {services.map((service) => (
+              <ServiceCard key={service.id} service={service} />
+            ))}
+          </div>
+        </SectionMain>
       </SectionContent>
     </Section>
   )
