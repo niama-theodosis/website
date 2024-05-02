@@ -9,7 +9,8 @@ export const MeetingButton = React.forwardRef<HTMLButtonElement, MeetingButtonPr
     <Button ref={ref} asChild size={size} variant={variant ?? getServiceVariant(service)} {...props}>
       <Link href={`/rendez-vous${service ? "/" + service : ""}`}>
         <span className="i-lucide-calendar-heart h-4 w-4"></span>
-        {size !== "icon" && <span className="ml-2">Prendre rendez-vous</span>}
+        {size === "hybrid" && <span className="hidden ml-2 sm:flex">Prendre rendez-vous</span>}
+        {size !== "hybrid" && size !== "icon" && <span className="ml-2">Prendre rendez-vous</span>}
       </Link>
     </Button>
   )
