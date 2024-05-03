@@ -75,7 +75,7 @@ function HomeAbout() {
     <Section variant="default" className="px-8">
       <SectionContent className="rounded-2xl bg-secondary/10 p-8">
         <SectionAside className="max-w-md place-self-center">
-          <Image src={about.image} alt="mockup" width={1024} height={1024} className="col-span-12 rounded-full"></Image>
+          <Image src={about.image} alt="mockup" width={448} height={448} className="col-span-12 rounded-full"></Image>
         </SectionAside>
         <SectionMain className="place-self-center">
           <SectionHeader>
