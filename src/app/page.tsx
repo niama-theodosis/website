@@ -39,13 +39,13 @@ function HomeHero() {
     <Section variant="default">
       <SectionContent>
         <SectionMain className="lg:col-span-6 xl:col-span-7">
-          <SectionHeader className="gap-8 lg:text-left">
+          <SectionHeader className="gap-8 max-w-none lg:text-left">
             <SectionTitle level={1} className="text-5xl md:text-6xl">
               {hero.title}
             </SectionTitle>
             <SectionTagline dangerouslySetInnerHTML={{__html: hero.content}} className="text-justify lg:text-left"></SectionTagline>
           </SectionHeader>
-          <MoreButton href="/prestations/alchimie-cellulaire" variant="primary" size="lg" className="self-end" />
+          <MoreButton href="/prestations/alchimie-cellulaire" color="primary" size="lg" className="self-end" />
         </SectionMain>
         <SectionAside className="max-w-lg place-self-center lg:col-span-6 xl:col-span-5">
           <Image src={hero.image} alt="hero" width={1024} height={1024} className="col-span-12 rounded-full"></Image>
@@ -99,7 +99,7 @@ function HomeNewsletter() {
   return (
     <Section>
       <SectionContent>
-        <SectionMain>
+        <SectionMain className="max-w-2xl mx-auto">
           <SectionHeader>
             <SectionTitle>{newsletter.title}</SectionTitle>
             <SectionTagline>{newsletter.tagline}</SectionTagline>

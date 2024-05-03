@@ -1,9 +1,9 @@
 import Link from "next/link"
-import React from "react"
+import {forwardRef} from "react"
 import {Button, type ButtonProps} from "./ui/button"
 
 // ROOT ************************************************************************************************************************************
-export const MoreButton = React.forwardRef<HTMLButtonElement, MoreButtonProps>(({href, ...props}, ref) => {
+export const MoreButton = forwardRef<HTMLButtonElement, MoreButtonProps>(({href, ...props}, ref) => {
   return (
     <Button ref={ref} asChild {...props}>
       <Link href={href}>

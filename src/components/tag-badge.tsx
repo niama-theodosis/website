@@ -11,7 +11,7 @@ export const TagBadgeFragment = graphql(`
 `)
 
 // MAIN ************************************************************************************************************************************
-export default function TagBadge({data}: Props) {
+export default function TagBadge({data}: TagBadgeProps) {
   const {name, slug} = readFragment(TagBadgeFragment, data)
   return (
     <Link href={`/blog/tags/${slug}`} className={BADGE()}>
@@ -21,6 +21,4 @@ export default function TagBadge({data}: Props) {
 }
 
 // TYPES ***********************************************************************************************************************************
-interface Props {
-  data: FragmentOf<typeof TagBadgeFragment>
-}
+export type TagBadgeProps = {data: FragmentOf<typeof TagBadgeFragment>}

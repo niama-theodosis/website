@@ -7,12 +7,12 @@ export const SECTION = tv({
   slots: {
     ASIDE: `SECTION_ASIDE grid grid-cols-12 col-span-12 
     lg:col-span-5`,
-    CONTENT: `SECTION_CONTENT grid max-w-screen-xl mx-auto space-y-8 grid-cols-12
+    CONTENT: `SECTION_CONTENT grid container mx-auto space-y-8 grid-cols-12
     lg:space-x-8 lg:space-y-0`,
     HEADER: `SECTION_HEADER flex flex-col gap-4 text-center max-w-2xl mx-auto`,
     MAIN: `SECTION_MAIN flex flex-col gap-8 col-span-12 
     lg:col-span-7 lg:only:col-span-12`,
-    ROOT: `SECTION flex flex-col px-8 py-16 w-full`,
+    ROOT: `SECTION flex flex-col py-16 w-full`,
     TITLE: "SECTION_TITLE",
     TAGLINE: `SECTION_TAGLINE text-gray-600 text-lg`,
   },

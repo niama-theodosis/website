@@ -12,7 +12,7 @@ import {hashnode} from "@/lib/hashnode"
 import {StaticPageFragment} from "@/lib/hashnode/fragments"
 import {graphql, readFragment} from "@/lib/hashnode/graphql"
 import type {Service} from "@/lib/schemas"
-import {getServiceDuration, getServicePrice, getServiceVariant} from "@/lib/utils"
+import {getServiceColor, getServiceDuration, getServicePrice} from "@/lib/utils"
 import Image from "next/image"
 import {notFound} from "next/navigation"
 
@@ -77,19 +77,19 @@ export default async function ServicesItemPage({params: {slug}}: ServicesItemPag
             <Prose content={intro.content.html} />
             <Accordion type="multiple" className="w-full">
               <AccordionItem value="reasons">
-                <AccordionTrigger variant={getServiceVariant(slug)}>Pourquoi opter pour une séance ?</AccordionTrigger>
+                <AccordionTrigger variant={getServiceColor(slug)}>Pourquoi opter pour une séance ?</AccordionTrigger>
                 <AccordionContent className="text-base">
                   <Prose content={reasons.content.html} />
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="proceedings">
-                <AccordionTrigger variant={getServiceVariant(slug)}>Comment celle-ci se déroule-t-elle ?</AccordionTrigger>
+                <AccordionTrigger variant={getServiceColor(slug)}>Comment celle-ci se déroule-t-elle ?</AccordionTrigger>
                 <AccordionContent className="text-base">
                   <Prose content={proceedings.content.html} />
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="benefits">
-                <AccordionTrigger variant={getServiceVariant(slug)}>Quels en sont les bienfaits ?</AccordionTrigger>
+                <AccordionTrigger variant={getServiceColor(slug)}>Quels en sont les bienfaits ?</AccordionTrigger>
                 <AccordionContent className="text-base">
                   <Prose content={benefits.content.html} />
                 </AccordionContent>

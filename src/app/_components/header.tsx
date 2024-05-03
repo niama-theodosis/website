@@ -1,45 +1,87 @@
 import {MeetingButton} from "@/components/meeting-button"
-import {Button} from "@/components/ui/button"
+import {SocialButtons} from "@/components/social-buttons"
+import {BUTTON, Button} from "@/components/ui/button"
+import {Label} from "@/components/ui/label"
+import {Separator} from "@/components/ui/separator"
+import {Sheet, SheetClose, SheetContent, SheetTrigger} from "@/components/ui/sheet"
 import {fetchContact, fetchServices} from "@/lib/db"
+import type {ImageDto} from "@/lib/schemas"
 import {cn} from "@/lib/utils"
 import Link from "next/link"
-import Menu from "./menu"
+import {forwardRef, type HTMLAttributes} from "react"
+import {Menu} from "./menu"
 
 // ROOT ************************************************************************************************************************************
-export default async function Header() {
-  const [{facebook, instagram, name, youtube}, services] = await Promise.all([fetchContact(), fetchServices()])
+export const Header = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(async ({className, ...props}, ref) => {
+  const [{name}, services] = await Promise.all([fetchContact(), fetchServices()])
 
-  const socials = [
-    {id: "instagram", icon: "i-lucide-instagram", url: instagram},
-    {id: "youtube", icon: "i-lucide-youtube", url: youtube},
-    {id: "facebook", icon: "i-lucide-facebook", url: facebook},
+  const navs: Nav[] = [
+    {
+      id: "services",
+      href: "/prestations",
+      label: "Prestations",
+      items: services.map(({excerpt: text, id, image, name: label, uri}) => ({href: uri, id: `${id}`, image, label, text})),
+    },
+    {id: "about", href: "/qui-suis-je", label: "Qui suis-je?"},
+    {id: "blog", href: "/blog", label: "Blog"},
+    {id: "contact", href: "/contact", label: "Contact"},
   ]
 
   return (
-    <header className="sticky top-0 z-20 border-b border-transparent bg-white py-5 transition-all">
-      <div className="mx-auto max-w-screen-xl px-5">
-        <div className="relative z-10 flex items-center justify-between">
-          <div className="flex w-full items-center justify-between lg:w-auto">
-            <Link
-              href="/"
-              className="focus-visible:shadow-outline-indigo -ml-2 flex items-center rounded-full px-2 text-lg transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
-            >
-              <span className="font-heading text-4xl font-bold">{name}</span>
-            </Link>
-          </div>
-          <Menu services={services} />
-          <div className="flex gap-2">
-            <MeetingButton variant="primary" size="hybrid" />
-            {socials.map(({icon, id, url}) => (
-              <Button key={id} size="icon" asChild>
-                <a href={url ?? ""} target="_blank">
-                  <span className={cn(icon, "h-4 w-4")}></span>
-                </a>
-              </Button>
-            ))}
+    <header ref={ref} className={cn("border-b border-transparent bg-white transition-all", className)} {...props}>
+      <div className="container mx-auto px-4 py-2 sm:py-4 xl:px-8">
+        <div className="flex items-center justify-between">
+          <Button variant="link" className="p-0 font-heading text-3xl font-bold text-black hover:no-underline lg:text-4xl" asChild>
+            <Link href="/">{name}</Link>
+          </Button>
+          <Menu navs={navs} className="hidden md:flex" />
+          <div className="flex items-center gap-1 lg:gap-2">
+            <MeetingButton color="primary" size="hybrid" />
+            <SocialButtons className="hidden sm:flex" />
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button size="icon" color="tertiary" className="order-1 md:hidden">
+                  <span className="i-lucide-panel-left h-5 w-5" />
+                  <span className="sr-only">Toggle Menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="sm:max-w-xs">
+                <nav className="grid gap-6 text-lg">
+                  {navs.map(({id, href, label, items}, i) => (
+                    <>
+                      {i > 0 && <Separator />}
+                      {items ? (
+                        <>
+                          <Label className={BUTTON({variant: "label", size: "lg", className: "font-bold"})}>
+                            {label}
+                          </Label>
+                          {items.map(({id, label, href}) => (
+                            <SheetClose key={id} asChild>
+                              <Button variant="ghost" asChild>
+                                <Link href={href}>{label}</Link>
+                              </Button>
+                            </SheetClose>
+                          ))}
+                        </>
+                      ) : (
+                        <SheetClose key={id} asChild>
+                          <Button variant="ghost" size="lg" asChild className="font-bold"> 
+                            <Link href={href}>{label}</Link>
+                          </Button>
+                        </SheetClose>
+                      )}
+                    </>
+                  ))}
+                </nav>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
     </header>
   )
-}
+})
+Header.displayName = "Header"
+
+// TYPES ***********************************************************************************************************************************
+export type Nav = {id: string; href: string; label: string; items?: (Nav & {image: ImageDto; text: string})[]}

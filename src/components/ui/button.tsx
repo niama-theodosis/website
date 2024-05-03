@@ -1,5 +1,5 @@
 import {Slot} from "@radix-ui/react-slot"
-import * as React from "react"
+import {forwardRef, type ButtonHTMLAttributes} from "react"
 import {tv, type VariantProps} from "tailwind-variants"
 
 // STYLES **********************************************************************************************************************************
@@ -8,37 +8,36 @@ export const BUTTON = tv({
   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 
   disabled:pointer-events-none disabled:opacity-50`,
   variants: {
-    variant: {
-      destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-      ghost: "hover:bg-accent hover:text-accent-foreground",
-      link: "text-secondary underline-offset-4 hover:underline",
-      outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-      primary: "bg-primary text-primary-foreground hover:bg-primary/90",
-      secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-      success: "bg-success text-success-foreground hover:bg-success/90",
-    },
+    color: {accent: "", destructive: "", primary: "", secondary: "", success: "", tertiary: ""},
     size: {
       default: "h-10 px-4 py-2",
-      hybrid: "h-10 w-10 sm:w-auto sm:px-4 sm:py-2",
+      hybrid: "h-10 w-10 lg:w-auto lg:px-4 lg:py-2",
       icon: "h-10 w-10",
       lg: "h-11 rounded-md px-8 text-base",
       sm: "h-9 rounded-md px-3",
     },
+    variant: {default: "", ghost: "", label: "", link: "underline-offset-4 hover:underline"},
   },
-  defaultVariants: {
-    variant: "secondary",
-    size: "default",
-  },
+  defaultVariants: {color: "secondary", size: "default", variant: "default"},
+  compoundVariants: [
+    {color: "destructive", variant: "default", class: "bg-destructive text-destructive-foreground hover:bg-destructive/90"},
+    {color: "primary", variant: "default", class: "bg-primary text-primary-foreground hover:bg-primary/90"},
+    {color: "secondary", variant: "default", class: "bg-secondary text-secondary-foreground hover:bg-secondary/90"},
+    {color: "success", variant: "default", class: "bg-success text-success-foreground hover:bg-success/90"},
+    {color: "tertiary", variant: "default", class: "bg-tertiary text-tertiary-foreground hover:bg-tertiary/90"},
+    {color: "accent", variant: "ghost", class: "hover:bg-accent hover:text-accent-foreground"},
+    {color: "primary", variant: "ghost", class: "hover:bg-primary hover:text-primary-foreground"},
+    {color: "secondary", variant: "ghost", class: "hover:bg-secondary hover:text-secondary-foreground"},
+    {color: "tertiary", variant: "ghost", class: "hover:bg-tertiary hover:text-tertiary-foreground"},
+  ],
 })
 
 // ROOT ************************************************************************************************************************************
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({className, variant, size, asChild = false, ...props}, ref) => {
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({className, color, variant, size, asChild = false, ...props}, ref) => {
   const Comp = asChild ? Slot : "button"
-  return <Comp className={BUTTON({variant, size, className})} ref={ref} {...props} />
+  return <Comp ref={ref} className={BUTTON({color, size, variant, className})} {...props} />
 })
 Button.displayName = "Button"
 
 // TYPES ***********************************************************************************************************************************
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof BUTTON> {
-  asChild?: boolean
-}
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & VariantProps<typeof BUTTON> & {asChild?: boolean}

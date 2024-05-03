@@ -2,7 +2,7 @@ import {MeetingButton} from "@/components/meeting-button"
 import {MoreButton} from "@/components/more-button"
 import {Card, CardContent, CardFooter, CardHeader} from "@/components/ui/card"
 import type {Service} from "@/lib/schemas"
-import {getServiceVariant} from "@/lib/utils"
+import {getServiceColor} from "@/lib/utils"
 import Image from "next/image"
 
 // SERVICES ********************************************************************************************************************************
@@ -18,7 +18,7 @@ export default function ServiceCard({service: {excerpt, image, name, slug, uri}}
       </CardContent>
       <CardFooter className="gap-1 p-4">
         <MeetingButton service={slug} size="icon" />
-        <MoreButton href={uri} variant={getServiceVariant(slug)} className="flex-1" />
+        <MoreButton href={uri} color={getServiceColor(slug)} className="flex-1" />
       </CardFooter>
     </Card>
   )

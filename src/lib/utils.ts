@@ -27,7 +27,7 @@ export function isPrimaryService(serviceSlug?: string) {
   return serviceSlug === "alchimie-cellulaire"
 }
 
-export function getServiceVariant(serviceSlug?: string) {
+export function getServiceColor(serviceSlug?: string) {
   return isPrimaryService(serviceSlug) ? "primary" : "secondary"
 }
 

@@ -3,8 +3,8 @@ import "@/styles/globals.css"
 import {ThemeProvider} from "@/app/_components/theme-provider"
 import {cn} from "@/lib/utils"
 import {Poppins, Quicksand} from "next/font/google"
-import Link from "next/link"
-import Header from "./_components/header"
+import {Footer} from "./_components/footer"
+import {Header} from "./_components/header"
 
 // FONTS ***********************************************************************************************************************************
 const poppins = Poppins({weight: "700", subsets: ["latin"], variable: "--font-heading"})
@@ -29,22 +29,12 @@ export default function RootLayout({children}: RootLayoutProps) {
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <Header />
+          <Header className="sticky top-0 z-20" />
           {children}
           <Footer />
         </ThemeProvider>
       </body>
     </html>
-  )
-}
-
-// COMPONENTS ******************************************************************************************************************************
-function Footer() {
-  return (
-    <footer className="flex justify-between border-t-[1px] bg-neutral-700 p-6 text-white">
-      <Link href="/mentions-legales">Mentions légales</Link>
-      <div>Copyright © 2024 Theodosis. Tous droits réservés.</div>
-    </footer>
   )
 }
 
