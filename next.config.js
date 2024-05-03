@@ -9,6 +9,7 @@ import withBundleAnalyzer from "@next/bundle-analyzer"
 /** @type {import("next").NextConfig} */
 const config = {
   images: {
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
         protocol: "https",
