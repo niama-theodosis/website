@@ -16,7 +16,7 @@ export default async function HomeServices() {
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </SectionTagline>
           </SectionHeader>
-          <div className="mx-auto grid max-w-screen-xl gap-8 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mx-auto grid max-w-screen-xl gap-8 sm:grid-cols-2 xl:grid-cols-4">
             {services.map((service) => (
               <ServiceCard key={service.id} service={service} />
             ))}
