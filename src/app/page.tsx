@@ -48,7 +48,7 @@ function HomeHero() {
           <MoreButton href="/prestations/alchimie-cellulaire" color="primary" size="lg" className="self-end" />
         </SectionMain>
         <SectionAside className="max-w-lg place-self-center lg:col-span-6 xl:col-span-5">
-          <Image src={hero.image} alt="hero" width={512} height={512} className="col-span-12 rounded-full"></Image>
+          <Image src={hero.image} alt="hero" width={512} height={512} priority className="col-span-12 rounded-full"></Image>
         </SectionAside>
       </SectionContent>
     </Section>

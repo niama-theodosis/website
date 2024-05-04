@@ -3,7 +3,7 @@ import {env} from "@/env"
 import {hashnode} from "@/lib/hashnode"
 import {graphql} from "@/lib/hashnode/graphql"
 import {cn} from "@/lib/utils"
-import {forwardRef, type HTMLAttributes} from "react"
+import {cache, forwardRef, type HTMLAttributes} from "react"
 
 // GQL *************************************************************************************************************************************
 export const SocialsQuery = graphql(`
@@ -20,15 +20,18 @@ export const SocialsQuery = graphql(`
   }
 `)
 
-// ROOT ************************************************************************************************************************************
-export const SocialButtons = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(async ({className, ...props}, ref) => {
+const fetchSocials = cache(async () => {
   const {publication} = await hashnode.request(SocialsQuery, {host: env.HASHNODE_PUBLICATION_HOST})
-
-  const socials = [
+  return [
     {id: "instagram", icon: "i-lucide-instagram", url: publication?.author.socialMediaLinks?.instagram},
     {id: "youtube", icon: "i-lucide-youtube", url: publication?.author.socialMediaLinks?.youtube},
     {id: "facebook", icon: "i-lucide-facebook", url: publication?.author.socialMediaLinks?.facebook},
   ]
+})
+
+// ROOT ************************************************************************************************************************************
+export const SocialButtons = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(async ({className, ...props}, ref) => {
+  const socials = await fetchSocials()
 
   return (
     <div ref={ref} className={cn("flex items-center gap-1 lg:gap-2", className)} {...props}>

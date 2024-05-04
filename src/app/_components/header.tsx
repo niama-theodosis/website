@@ -8,7 +8,7 @@ import {fetchContact, fetchServices} from "@/lib/db"
 import type {ImageDto} from "@/lib/schemas"
 import {cn} from "@/lib/utils"
 import Link from "next/link"
-import {forwardRef, type HTMLAttributes} from "react"
+import {Fragment, forwardRef, type HTMLAttributes} from "react"
 import {Menu} from "./menu"
 
 // ROOT ************************************************************************************************************************************
@@ -48,7 +48,7 @@ export const Header = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(async
               <SheetContent side="left" className="sm:max-w-xs">
                 <nav className="grid gap-6 text-lg">
                   {navs.map(({id, href, label, items}, i) => (
-                    <>
+                    <Fragment key={id}>
                       {i > 0 && <Separator />}
                       {items ? (
                         <>
@@ -70,7 +70,7 @@ export const Header = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(async
                           </Button>
                         </SheetClose>
                       )}
-                    </>
+                    </Fragment>
                   ))}
                 </nav>
               </SheetContent>

@@ -17,6 +17,12 @@ const config = {
         port: "",
         pathname: "/f/**",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.hashnode.com",
+        port: "",
+        pathname: "/**/**",
+      },
     ],
   },
 }
