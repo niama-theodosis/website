@@ -8,6 +8,9 @@ import withBundleAnalyzer from "@next/bundle-analyzer"
 
 /** @type {import("next").NextConfig} */
 const config = {
+  experimental: {
+    ppr: true,
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
