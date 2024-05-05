@@ -3,7 +3,7 @@
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert"
 import {useCallback, useEffect, useRef, useState} from "react"
 
-// MAIN ************************************************************************************************************************************
+// ROOT ************************************************************************************************************************************
 export default function Iframe({className, src}: Props) {
   const iFrameRef = useRef<HTMLIFrameElement>(null)
   const [alertShown, setAlertShown] = useState(true)

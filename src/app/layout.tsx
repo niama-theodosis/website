@@ -1,6 +1,5 @@
 import "@/styles/globals.css"
 
-import {ThemeProvider} from "@/app/_components/theme-provider"
 import {cn} from "@/lib/utils"
 import {Poppins, Quicksand} from "next/font/google"
 import {Footer} from "./_components/footer"
@@ -28,11 +27,9 @@ export default function RootLayout({children}: RootLayoutProps) {
           quicksand.variable
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <Header className="sticky top-0 z-20" />
-          {children}
-          <Footer />
-        </ThemeProvider>
+        <Header className="sticky top-0 z-20" />
+        {children}
+        <Footer />
       </body>
     </html>
   )

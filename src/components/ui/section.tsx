@@ -1,4 +1,4 @@
-import * as React from "react"
+import {forwardRef, type HTMLAttributes} from "react"
 import {tv, type VariantProps} from "tailwind-variants"
 import {HEADING} from "./typography"
 
@@ -39,43 +39,46 @@ export const SECTION = tv({
 const {ASIDE, CONTENT, HEADER, MAIN, ROOT, TAGLINE, TITLE} = SECTION()
 
 // ASIDE ***********************************************************************************************************************************
-export const SectionAside = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(({className, ...props}, ref) => (
+export const SectionAside = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(({className, ...props}, ref) => (
   <aside ref={ref} className={ASIDE({className})} {...props} />
 ))
 SectionAside.displayName = "SectionAside"
 
 // ROOT ************************************************************************************************************************************
-export const Section = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement> & VariantProps<typeof SECTION>>(
+export const Section = forwardRef<HTMLElement, SectionProps>(
   ({className, variant, ...props}, ref) => <section ref={ref} className={ROOT({variant, className})} {...props} />
 )
 Section.displayName = "Section"
 
 // CONTENT *********************************************************************************************************************************
-export const SectionContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({className, ...props}, ref) => (
+export const SectionContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({className, ...props}, ref) => (
   <div ref={ref} className={CONTENT({className})} {...props} />
 ))
 SectionContent.displayName = "SectionContent"
 
 // HEADER **********************************************************************************************************************************
-export const SectionHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({className, ...props}, ref) => (
+export const SectionHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({className, ...props}, ref) => (
   <div ref={ref} className={HEADER({className})} {...props} />
 ))
 SectionHeader.displayName = "SectionHeader"
 
 // MAIN ************************************************************************************************************************************
-export const SectionMain = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({className, ...props}, ref) => (
+export const SectionMain = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(({className, ...props}, ref) => (
   <main ref={ref} className={MAIN({className})} {...props} />
 ))
 SectionMain.displayName = "SectionMain"
 
 // TAGLINE *********************************************************************************************************************************
-export const SectionTagline = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
-  ({className, ...props}, ref) => <p ref={ref} className={TAGLINE({className})} {...props} />
-)
+export const SectionTagline = forwardRef<HTMLParagraphElement, HTMLAttributes<HTMLParagraphElement>>(({className, ...props}, ref) => (
+  <p ref={ref} className={TAGLINE({className})} {...props} />
+))
 SectionTagline.displayName = "SectionTagline"
 
 // TITLE ***********************************************************************************************************************************
-export const SectionTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement> & VariantProps<typeof SECTION>>(
+export const SectionTitle = forwardRef<HTMLHeadingElement, HTMLAttributes<HTMLHeadingElement> & VariantProps<typeof SECTION>>(
   ({className, level, ...props}, ref) => <h2 ref={ref} className={TITLE({level, className})} {...props} />
 )
 SectionTitle.displayName = "SectionTitle"
+
+// TYPES ***********************************************************************************************************************************
+export type SectionProps = HTMLAttributes<HTMLElement> & VariantProps<typeof SECTION>

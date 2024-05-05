@@ -45,7 +45,7 @@ const ServiceSectionsQuery = graphql(
 // STATIC **********************************************************************************************************************************
 export {fetchServiceSlugs as generateStaticParams} from "@/lib/db"
   
-// MAIN ************************************************************************************************************************************
+// ROOT ************************************************************************************************************************************
 export default async function ServicesItemPage({params: {slug}}: ServicesItemPageProps) {
   const [{publication}, item] = await Promise.all([
     hashnode.request(ServiceSectionsQuery, {
@@ -74,35 +74,35 @@ export default async function ServicesItemPage({params: {slug}}: ServicesItemPag
             <SectionHeader>
               <SectionTitle>{name}</SectionTitle>
             </SectionHeader>
-            <Prose content={intro.content.html} />
+            <Prose dangerouslySetInnerHTML={{__html: intro.content.html}} />
             <Accordion type="multiple" className="w-full">
               <AccordionItem value="reasons">
                 <AccordionTrigger variant={getServiceColor(slug)}>Pourquoi opter pour une séance ?</AccordionTrigger>
                 <AccordionContent className="text-base">
-                  <Prose content={reasons.content.html} />
+                  <Prose dangerouslySetInnerHTML={{__html: reasons.content.html}} />
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="proceedings">
                 <AccordionTrigger variant={getServiceColor(slug)}>Comment celle-ci se déroule-t-elle ?</AccordionTrigger>
                 <AccordionContent className="text-base">
-                  <Prose content={proceedings.content.html} />
+                  <Prose dangerouslySetInnerHTML={{__html: proceedings.content.html}} />
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="benefits">
                 <AccordionTrigger variant={getServiceColor(slug)}>Quels en sont les bienfaits ?</AccordionTrigger>
                 <AccordionContent className="text-base">
-                  <Prose content={benefits.content.html} />
+                  <Prose dangerouslySetInnerHTML={{__html: benefits.content.html}} />
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
           </SectionMain>
           <SectionAside className="gap-8 place-self-start">
             <Image src={image.url} alt={name} width={1024} height={1024} className="col-span-12 rounded-2xl md:col-span-6 lg:col-span-12" />
-            <Card className="col-span-12 md:col-span-6 lg:col-span-12">
+            <Card className="p-6 col-span-12 md:col-span-6 lg:col-span-12">
               <CardHeader>
                 <CardTitle>Vous êtes intéressé·e?</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent>
                 <div className="flex justify-between">
                   <ServiceDuration duration={duration} />
                   <ServicePrice price={price} />

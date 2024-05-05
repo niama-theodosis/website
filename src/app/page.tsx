@@ -1,8 +1,8 @@
 import {MoreButton} from "@/components/more-button"
+import {PostsSection} from "@/components/posts-section"
 import {Section, SectionAside, SectionContent, SectionHeader, SectionMain, SectionTagline, SectionTitle} from "@/components/ui/section"
 import {Toaster} from "@/components/ui/sonner"
 import Image from "next/image"
-import HomeBlog from "./_components/blog"
 import NewsletterForm from "./_components/newsletter-form"
 import HomeServices from "./_components/services"
 
@@ -13,7 +13,7 @@ export default function HomePage() {
       <HomeHero />
       <HomeServices />
       <HomeAbout />
-      <HomeBlog />
+      <PostsSection first={3} title="Derniers articles" tagline="Lorem ipsum" className="bg-white" />
       <HomeNewsletter />
     </main>
   )

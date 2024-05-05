@@ -1,28 +1,26 @@
 import {MeetingButton} from "@/components/meeting-button"
 import {MoreButton} from "@/components/more-button"
-import {Card, CardContent, CardFooter, CardHeader} from "@/components/ui/card"
+import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card"
 import type {Service} from "@/lib/schemas"
 import {getServiceColor} from "@/lib/utils"
 import Image from "next/image"
 
-// SERVICES ********************************************************************************************************************************
+// ROOT ************************************************************************************************************************************
 export default function ServiceCard({service: {excerpt, image, name, slug, uri}}: ServiceCardProps) {
   return (
-    <Card className="flex flex-col">
-      <CardHeader className="p-4">
+    <Card>
+      <CardHeader>
         <Image src={image.url} alt={name} width={550} height={550} className="aspect-video rounded-2xl object-cover" />
       </CardHeader>
-      <CardContent className="flex-1 space-y-4 p-4 text-center">
-        <h3 className="font-heading text-lg font-bold">{name}</h3>
-        <p className="flex-1 text-gray-500">{excerpt}</p>
+      <CardContent className="text-center">
+        <CardTitle className="text-xl">{name}</CardTitle>
+        <CardDescription className="flex-1 text-base">{excerpt}</CardDescription>
       </CardContent>
-      <CardFooter className="gap-1 p-4">
+      <CardFooter>
         <MeetingButton service={slug} size="icon" />
         <MoreButton href={uri} color={getServiceColor(slug)} className="flex-1" />
       </CardFooter>
     </Card>
   )
 }
-
-// TYPES ***********************************************************************************************************************************
 export type ServiceCardProps = {service: Service}

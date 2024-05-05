@@ -2,7 +2,7 @@ import {tv} from "tailwind-variants"
 
 // HEADING *********************************************************************************************************************************
 export const HEADING = tv({
-  base: `font-heading scroll-m-20 font-bold leading-none tracking-tight text-foreground`,
+  base: `font-heading scroll-m-20 font-bold leading-none tracking-tight text-foreground text-balance`,
   variants: {
     level: {
       1: `text-4xl 
