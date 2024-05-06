@@ -70,7 +70,6 @@ const fetchPosts = async ({after, first, tag}: Pick<PostsSectionProps, "after" |
       })
         .then((res) => res.json() as unknown as {data: {publication: {posts: {edges: {node: PostCardData}[]}}}})
         .then((res) => res.data))
-  await new Promise((resolve) => setTimeout(resolve, 4000))
   return data.publication?.posts.edges ?? []
 }
 
