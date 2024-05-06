@@ -1,4 +1,4 @@
-import PostCard, {PostCardFragment, PostNone, PostSkeleton} from "@/components/post-card"
+import PostCard, {PostCardFragment, PostNone, PostSkeleton, type PostCardData} from "@/components/post-card"
 import {env} from "@/env"
 import {hashnode} from "@/lib/hashnode"
 import {PageInfoFragment} from "@/lib/hashnode/fragments"
@@ -63,7 +63,7 @@ const fetchPosts = async ({after, first, tag}: Pick<PostsSectionProps, "after" |
         method: "POST",
         body: JSON.stringify({query: print(PostsQuery), variables: {host: env.HASHNODE_PUBLICATION_HOST, after, first}}),
         cache: "no-store",
-      }).then((res) => res.json()))
+      }).then((res) => res.json() as unknown as {publication: {posts: {edges: PostCardData[]}}}))
   await new Promise((resolve) => setTimeout(resolve, 4000))
   return data.publication?.posts.edges ?? []
 }
