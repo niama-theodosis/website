@@ -3,6 +3,7 @@ import {env} from "@/env"
 import {hashnode} from "@/lib/hashnode"
 import {PageInfoFragment} from "@/lib/hashnode/fragments"
 import {graphql} from "@/lib/hashnode/graphql"
+import {unstable_noStore} from "next/cache"
 import {Suspense, forwardRef} from "react"
 import {Section, SectionContent, SectionHeader, SectionMain, SectionTagline, SectionTitle, type SectionProps} from "./ui/section"
 
@@ -96,6 +97,7 @@ PostsSection.displayName = "PostsSection"
 
 // ITEMS ***********************************************************************************************************************************
 async function Posts(props: Pick<PostsSectionProps, "after" | "first" | "tag">) {
+  unstable_noStore()
   const posts = await fetchPosts(props)
 
   if (posts.length === 0) return <PostNone />
