@@ -61,7 +61,10 @@ const fetchPosts = async ({after, first, tag}: Pick<PostsSectionProps, "after" |
     ? hashnode.request(PostsByTagQuery, {host: env.HASHNODE_PUBLICATION_HOST, after, first, tag})
     : fetch(env.HASHNODE_GQL_ENDPOINT, {
         method: "POST",
-        body: JSON.stringify({query: print(PostsQuery), variables: {host: env.HASHNODE_PUBLICATION_HOST, after, first}}),
+        body: JSON.stringify({
+          query: print(PostsQuery),
+          variables: {host: env.HASHNODE_PUBLICATION_HOST, after, first, noCache: Date.now()},
+        }),
         cache: "no-store",
       }).then((res) => res.json() as unknown as {publication: {posts: {edges: {node: PostCardData}[]}}}))
   await new Promise((resolve) => setTimeout(resolve, 4000))
