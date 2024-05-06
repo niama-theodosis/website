@@ -3,6 +3,7 @@ import {env} from "@/env"
 import {hashnode} from "@/lib/hashnode"
 import {PageInfoFragment} from "@/lib/hashnode/fragments"
 import {graphql} from "@/lib/hashnode/graphql"
+import {print} from "graphql"
 import {Suspense, forwardRef} from "react"
 import {Section, SectionContent, SectionHeader, SectionMain, SectionTagline, SectionTitle, type SectionProps} from "./ui/section"
 
@@ -47,10 +48,22 @@ const PostsByTagQuery = graphql(
   [PageInfoFragment, PostCardFragment]
 )
 
+// const fetchPosts = async ({after, first, tag}: Pick<PostsSectionProps, "after" | "first" | "tag">) => {
+//   const data = await (tag
+//     ? hashnode.request(PostsByTagQuery, {host: env.HASHNODE_PUBLICATION_HOST, after, first, tag})
+//     : hashnode.request(PostsQuery, {host: env.HASHNODE_PUBLICATION_HOST, after, first}))
+//   await new Promise((resolve) => setTimeout(resolve, 4000))
+//   return data.publication?.posts.edges ?? []
+// }
+
 const fetchPosts = async ({after, first, tag}: Pick<PostsSectionProps, "after" | "first" | "tag">) => {
   const data = await (tag
     ? hashnode.request(PostsByTagQuery, {host: env.HASHNODE_PUBLICATION_HOST, after, first, tag})
-    : hashnode.request(PostsQuery, {host: env.HASHNODE_PUBLICATION_HOST, after, first}))
+    : fetch(env.HASHNODE_GQL_ENDPOINT, {
+        method: "POST",
+        body: JSON.stringify({query: print(PostsQuery), variables: {host: env.HASHNODE_PUBLICATION_HOST, after, first}}),
+        cache: "no-store",
+      }).then((res) => res.json()))
   await new Promise((resolve) => setTimeout(resolve, 4000))
   return data.publication?.posts.edges ?? []
 }
