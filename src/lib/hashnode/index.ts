@@ -8,4 +8,4 @@ const requestMiddleware: RequestMiddleware = (request) => {
 }
 
 // CLIENT **********************************************************************************************************************************
-export const hashnode = new GraphQLClient(env.HASHNODE_GQL_ENDPOINT, {requestMiddleware})
+export const hashnode = new GraphQLClient(env.HASHNODE_GQL_ENDPOINT, { cache: "no-store", requestMiddleware})
