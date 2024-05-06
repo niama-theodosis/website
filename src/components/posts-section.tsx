@@ -52,7 +52,6 @@ const fetchPosts = async ({after, first, tag}: Pick<PostsSectionProps, "after" |
   const data = await (tag
     ? hashnode.request(PostsByTagQuery, {host: env.HASHNODE_PUBLICATION_HOST, after, first, tag})
     : hashnode.request(PostsQuery, {host: env.HASHNODE_PUBLICATION_HOST, after, first}))
-  await new Promise((resolve) => setTimeout(resolve, 4000))
   return data.publication?.posts.edges ?? []
 }
 
