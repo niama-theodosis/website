@@ -4,8 +4,8 @@ import {env} from "@/env"
 
 export default {
   schema: "./src/lib/db/schema.ts",
-  driver: "pg",
+  dialect: "postgresql",
   dbCredentials: {
-    connectionString: env.POSTGRES_URL,
+    url: env.POSTGRES_URL,
   },
 } satisfies Config
