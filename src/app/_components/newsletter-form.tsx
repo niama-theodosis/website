@@ -57,7 +57,7 @@ export default function NewsletterForm() {
               <FormDescription>
                 La protection de vos données est
                 <Button asChild variant="link" className="h-auto px-1 py-0">
-                  <Link href="/mentions-legales">notre priorité.</Link>
+                  <Link href="/mentions-legales">ma priorité.</Link>
                 </Button>
               </FormDescription>
               <FormMessage></FormMessage>

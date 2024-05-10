@@ -5,7 +5,7 @@ import {hashnode} from "@/lib/hashnode"
 import {graphql} from "@/lib/hashnode/graphql"
 import type {ActionState} from "@/lib/schemas"
 import {rhfErrorsFromZod} from "@/lib/utils"
-import {ClientError} from "node_modules/graphql-request/build/esm/types"
+import {ClientError} from "graphql-request"
 import {zData, type Data} from "./_utils"
 
 // GQL *************************************************************************************************************************************

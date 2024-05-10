@@ -1,34 +1,37 @@
-import ServiceCard from "@/components/service-card"
-import {Section, SectionContent, SectionHeader, SectionMain, SectionTagline, SectionTitle} from "@/components/ui/section"
-import {fetchServices} from "@/lib/db"
+import {
+  Section,
+  SectionContent,
+  SectionHeader,
+  SectionMain,
+  SectionTagline,
+  SectionTitle
+} from "@/components/ui/section"
+import {Toaster} from "@/components/ui/sonner"
 import {fetchPage} from "@/lib/hashnode"
 import {notFound} from "next/navigation"
+import NewsletterForm from "./newsletter-form"
 
 // CACHE ***********************************************************************************************************************************
 export const revalidate = 0 // 86400 // 1 day
 
 // ROOT ************************************************************************************************************************************
-export default async function HomeServices() {
-  const data = await fetchPage("accueil-mes-prestations")
+export async function HomeNewsletter() {
+  const data = await fetchPage("accueil-newsletter")
   if (!data) notFound()
   const {content, title} = data
-  const services = await fetchServices()
 
   return (
     <Section>
       <SectionContent>
-        <SectionMain>
+        <SectionMain className="max-w-2xl mx-auto">
           <SectionHeader>
             <SectionTitle>{title}</SectionTitle>
             <SectionTagline>{content.text}</SectionTagline>
           </SectionHeader>
-          <div className="mx-auto grid max-w-screen-xl gap-8 sm:grid-cols-2 xl:grid-cols-4">
-            {services.map((service) => (
-              <ServiceCard key={service.id} service={service} />
-            ))}
-          </div>
+          <NewsletterForm />
         </SectionMain>
       </SectionContent>
+      <Toaster richColors />
     </Section>
   )
 }

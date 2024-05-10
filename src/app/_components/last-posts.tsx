@@ -1,3 +1,4 @@
+import {PostsSection} from "@/components/posts-section"
 import {fetchPage} from "@/lib/hashnode"
 import {notFound} from "next/navigation"
 
@@ -5,15 +6,12 @@ import {notFound} from "next/navigation"
 export const revalidate = 0 // 86400 // 1 day
 
 // ROOT ************************************************************************************************************************************
-export default async function DisclaimerPage() {
-  const data = await fetchPage("mentions-legales")
+export async function HomeLastPosts() {
+  const data = await fetchPage("accueil-derniers-articles")
   if (!data) notFound()
   const {content, title} = data
 
   return (
-    <article className="prose mx-auto max-w-screen-xl flex-1 px-8 py-16 prose-headings:font-heading">
-      <h1>{title}</h1>
-      <div dangerouslySetInnerHTML={{__html: content.html}}></div>
-    </article>
+    <PostsSection first={3} title={title} tagline={content.text} className="bg-white" />
   )
 }

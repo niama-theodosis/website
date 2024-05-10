@@ -36,7 +36,7 @@ export const SECTION = tv({
   },
 })
 
-const {ASIDE, CONTENT, HEADER, MAIN, ROOT, TAGLINE, TITLE} = SECTION()
+export const {ASIDE, CONTENT, HEADER, MAIN, ROOT, TAGLINE, TITLE} = SECTION()
 
 // ASIDE ***********************************************************************************************************************************
 export const SectionAside = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(({className, ...props}, ref) => (
@@ -45,9 +45,9 @@ export const SectionAside = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>
 SectionAside.displayName = "SectionAside"
 
 // ROOT ************************************************************************************************************************************
-export const Section = forwardRef<HTMLElement, SectionProps>(
-  ({className, variant, ...props}, ref) => <section ref={ref} className={ROOT({variant, className})} {...props} />
-)
+export const Section = forwardRef<HTMLElement, SectionProps>(({className, variant, ...props}, ref) => (
+  <section ref={ref} className={ROOT({variant, className})} {...props} />
+))
 Section.displayName = "Section"
 
 // CONTENT *********************************************************************************************************************************

@@ -161,6 +161,7 @@ export const StaticPageFragment = graphql(`
   fragment StaticPage on StaticPage {
     content {
       html
+      text
     }
     hidden
     id
