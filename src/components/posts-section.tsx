@@ -64,7 +64,7 @@ const fetchPosts = async ({after, first, tag}: Pick<PostsSectionProps, "after" |
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
           query: print(PostsQuery),
-          variables: {host: env.HASHNODE_PUBLICATION_HOST, after, first},
+          variables: {host: env.HASHNODE_PUBLICATION_HOST, after, first, now: Date.now()},
         }),
         next: {tags: ["posts"]},
       })
