@@ -7,10 +7,8 @@ export async function POST(request: Request) {
     const payload = await request.json()
     validateWebhook(request.headers.get("x-hashnode-signature"), payload)
     const {id, type} = zWebhook.parse(payload)
-    if (type === "post") {
-      revalidateTag("posts")
-      revalidateTag(id)
-    }
+    if (type === "post") revalidateTag("posts")
+    revalidateTag(id)
     return new Response(JSON.stringify("ok"), {status: 200})
   } catch (error_) {
     console.error(error_)
