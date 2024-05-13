@@ -1,77 +1,7 @@
-import PostCard, {PostCardFragment, PostNone, PostSkeleton, type PostCardData} from "@/components/post-card"
-import {env} from "@/env"
-import {hashnode} from "@/lib/hashnode"
-import {PageInfoFragment} from "@/lib/hashnode/fragments"
-import {graphql} from "@/lib/hashnode/graphql"
-import {print} from "graphql"
+import PostCard, {PostNone, PostSkeleton} from "@/components/post-card"
+import {fetchPosts, fetchPostsByTag} from "@/lib/hashnode"
 import {Suspense, forwardRef} from "react"
 import {Section, SectionContent, SectionHeader, SectionMain, SectionTagline, SectionTitle, type SectionProps} from "./ui/section"
-
-// GQL *************************************************************************************************************************************
-const PostsQuery = graphql(
-  `
-    query Posts($host: String!, $first: Int!, $after: String) {
-      publication(host: $host) {
-        posts(first: $first, after: $after) {
-          edges {
-            node {
-              ...PostCard
-            }
-          }
-          pageInfo {
-            ...PageInfo
-          }
-        }
-      }
-    }
-  `,
-  [PageInfoFragment, PostCardFragment]
-)
-
-const PostsByTagQuery = graphql(
-  `
-    query PostsByTag($host: String!, $first: Int!, $tag: String!, $after: String) {
-      publication(host: $host) {
-        posts(first: $first, after: $after, filter: {tagSlugs: [$tag]}) {
-          edges {
-            node {
-              ...PostCard
-            }
-          }
-          pageInfo {
-            ...PageInfo
-          }
-        }
-      }
-    }
-  `,
-  [PageInfoFragment, PostCardFragment]
-)
-
-// const fetchPosts = async ({after, first, tag}: Pick<PostsSectionProps, "after" | "first" | "tag">) => {
-//   unstable_noStore()
-//   const data = await (tag
-//     ? hashnode.request(PostsByTagQuery, {host: env.HASHNODE_PUBLICATION_HOST, after, first, tag})
-//     : hashnode.request(PostsQuery, {host: env.HASHNODE_PUBLICATION_HOST, after, first}))
-//   return data.publication?.posts.edges ?? []
-// }
-
-const fetchPosts = async ({after, first, tag}: Pick<PostsSectionProps, "after" | "first" | "tag">) => {
-  const data = await (tag
-    ? hashnode.request(PostsByTagQuery, {host: env.HASHNODE_PUBLICATION_HOST, after, first, tag})
-    : fetch(env.HASHNODE_GQL_ENDPOINT, {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          query: print(PostsQuery),
-          variables: {host: env.HASHNODE_PUBLICATION_HOST, after, first, now: Date.now()},
-        }),
-        next: {tags: ["posts"]},
-      })
-        .then((res) => res.json() as unknown as {data: {publication: {posts: {edges: {node: PostCardData}[]}}}})
-        .then((res) => res.data))
-  return data.publication?.posts.edges ?? []
-}
 
 // ROOT ************************************************************************************************************************************
 export const PostsSection = forwardRef<HTMLElement, PostsSectionProps>(async ({after, first, tag, tagline, title, ...props}, ref) => {
@@ -96,8 +26,8 @@ export const PostsSection = forwardRef<HTMLElement, PostsSectionProps>(async ({a
 PostsSection.displayName = "PostsSection"
 
 // ITEMS ***********************************************************************************************************************************
-async function Posts(props: Pick<PostsSectionProps, "after" | "first" | "tag">) {
-  const posts = await fetchPosts(props)
+async function Posts({after, first, tag}: Pick<PostsSectionProps, "after" | "first" | "tag">) {
+  const posts = await (tag ? fetchPostsByTag(tag, first, after) : fetchPosts(first, after))
 
   if (posts.length === 0) return <PostNone />
   return (
