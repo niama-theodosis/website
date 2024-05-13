@@ -5,7 +5,7 @@ import Image from "next/image"
 import {notFound} from "next/navigation"
 
 // CACHE ***********************************************************************************************************************************
-export const revalidate = 0 // 86400 // 1 day
+// export const revalidate = 0 // 86400 // 1 day
 
 // ROOT ************************************************************************************************************************************
 export async function HomeAbout() {

@@ -12,7 +12,7 @@ import {notFound} from "next/navigation"
 import NewsletterForm from "./newsletter-form"
 
 // CACHE ***********************************************************************************************************************************
-export const revalidate = 0 // 86400 // 1 day
+// export const revalidate = 0 // 86400 // 1 day
 
 // ROOT ************************************************************************************************************************************
 export async function HomeNewsletter() {

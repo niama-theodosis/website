@@ -3,7 +3,7 @@ import {fetchPage} from "@/lib/hashnode"
 import {notFound} from "next/navigation"
 
 // CACHE ***********************************************************************************************************************************
-export const revalidate = 0 // 86400 // 1 day
+// export const revalidate = 0 // 86400 // 1 day
 
 // ROOT ************************************************************************************************************************************
 export async function HomeLastPosts() {
