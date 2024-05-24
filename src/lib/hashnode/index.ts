@@ -38,7 +38,7 @@ const pageIdsFromSlugs = new Map(
 export const hashnode = new GraphQLClient(env.HASHNODE_GQL_ENDPOINT)
 
 // STATIC PAGE *****************************************************************************************************************************
-export const PageQuery = graphql(
+const PageQuery = graphql(
   `
     query Page($host: String!, $slug: String!) {
       publication(host: $host) {
@@ -62,6 +62,47 @@ export const fetchPage = (slug: string) =>
     undefined,
     {tags: [`page-${pageIdsFromSlugs.get(slug)}`]}
   )()
+
+// SERVICE *********************************************************************************************************************************
+const ServiceSectionsQuery = graphql(
+  `
+    query ServiceSections($host: String!, $benefits: String!, $intro: String!, $proceedings: String!, $reasons: String!) {
+      publication(host: $host) {
+        benefits: staticPage(slug: $benefits) {
+          ...StaticPage
+        }
+        intro: staticPage(slug: $intro) {
+          ...StaticPage
+        }
+        proceedings: staticPage(slug: $proceedings) {
+          ...StaticPage
+        }
+        reasons: staticPage(slug: $reasons) {
+          ...StaticPage
+        }
+      }
+    }
+  `,
+  [StaticPageFragment]
+)
+
+export const fetchService = async (slug: string) => {
+  const {publication} = await hashnode.request(ServiceSectionsQuery, {
+    host: env.HASHNODE_PUBLICATION_HOST,
+    benefits: `prestations-${slug}-bienfaits`,
+    intro: `prestations-${slug}-introduction`,
+    proceedings: `prestations-${slug}-deroulement`,
+    reasons: `prestations-${slug}-raisons`,
+  })
+
+  if (!publication?.benefits || !publication?.intro || !publication?.proceedings || !publication?.reasons) return
+
+  const benefits = readFragment(StaticPageFragment, publication.benefits)
+  const intro = readFragment(StaticPageFragment, publication.intro)
+  const proceedings = readFragment(StaticPageFragment, publication.proceedings)
+  const reasons = readFragment(StaticPageFragment, publication.reasons)
+  return {benefits, intro, proceedings, reasons}
+}
 
 // POSTS ***********************************************************************************************************************************
 const PostsQuery = graphql(
@@ -111,7 +152,11 @@ const PostsByTagQuery = graphql(
   `,
   [PageInfoFragment, PostCardFragment]
 )
-export const fetchPostsByTag = async (tag: string, first: number, after?: string) => {
-  const data = await hashnode.request(PostsByTagQuery, {host: env.HASHNODE_PUBLICATION_HOST, after, first, tag})
-  return data.publication?.posts.edges ?? []
-}
+export const fetchPostsByTag = unstable_cache(
+  async (tag: string, first: number, after?: string) => {
+    const data = await hashnode.request(PostsByTagQuery, {host: env.HASHNODE_PUBLICATION_HOST, after, first, tag})
+    return data.publication?.posts.edges ?? []
+  },
+  undefined,
+  {tags: ["posts"]}
+)
