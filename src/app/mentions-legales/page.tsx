@@ -1,4 +1,4 @@
-import {fetchPage} from "@/lib/hashnode"
+import {fetchPage} from "@/lib/pocketbase"
 import {notFound} from "next/navigation"
 
 // CACHE ***********************************************************************************************************************************
@@ -13,7 +13,7 @@ export default async function DisclaimerPage() {
   return (
     <article className="prose mx-auto max-w-screen-xl flex-1 px-8 py-16 prose-headings:font-heading">
       <h1>{title}</h1>
-      <div dangerouslySetInnerHTML={{__html: content.html}}></div>
+      <div dangerouslySetInnerHTML={{__html: content}}></div>
     </article>
   )
 }

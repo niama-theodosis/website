@@ -1,14 +1,7 @@
-import {
-  Section,
-  SectionContent,
-  SectionHeader,
-  SectionMain,
-  SectionTagline,
-  SectionTitle
-} from "@/components/ui/section"
+import {Prose} from "@/components/ui/prose"
+import {Section, SectionContent, SectionHeader, SectionMain, SectionTagline, SectionTitle} from "@/components/ui/section"
 import {Toaster} from "@/components/ui/sonner"
-import {fetchPage} from "@/lib/hashnode"
-import {notFound} from "next/navigation"
+import {fetchHome} from "@/lib/pocketbase"
 import NewsletterForm from "./newsletter-form"
 
 // CACHE ***********************************************************************************************************************************
@@ -16,19 +9,21 @@ import NewsletterForm from "./newsletter-form"
 
 // ROOT ************************************************************************************************************************************
 export async function HomeNewsletter() {
-  const data = await fetchPage("accueil-newsletter")
-  if (!data) notFound()
-  const {content, title} = data
+  const {newsletter} = await fetchHome()
+  const {content, tagline, title} = newsletter
 
   return (
     <Section>
       <SectionContent>
-        <SectionMain className="max-w-2xl mx-auto">
+        <SectionMain>
           <SectionHeader>
             <SectionTitle>{title}</SectionTitle>
-            <SectionTagline>{content.text}</SectionTagline>
+            <SectionTagline>{tagline}</SectionTagline>
           </SectionHeader>
-          <NewsletterForm />
+          <Prose dangerouslySetInnerHTML={{__html: content}} />
+          <div className="mx-auto w-full max-w-2xl">
+            <NewsletterForm />
+          </div>
         </SectionMain>
       </SectionContent>
       <Toaster richColors />

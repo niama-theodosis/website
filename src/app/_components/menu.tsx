@@ -33,7 +33,7 @@ export const Menu = React.forwardRef<React.ElementRef<typeof NavigationMenu>, Me
                           href={href}
                           className="flex select-none items-center gap-2 space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                         >
-                          <Image src={image.url} alt={image.name} height={64} width={64} className="rounded-md object-cover" />
+                          <Image src={image.src} alt={image.alt} height={64} width={64} className="rounded-md object-cover" />
                           <div className="space-y-2">
                             <div className="font-heading text-sm font-bold leading-none">{label}</div>
                             <p className="line-clamp-3 text-sm leading-snug text-muted-foreground">{text}</p>

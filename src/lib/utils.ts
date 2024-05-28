@@ -4,6 +4,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat"
 import type {FieldErrors, FieldValues} from "react-hook-form"
 import {twMerge} from "tailwind-merge"
 import type {ZodError} from "zod"
+import type {Service} from "./pocketbase/schemas"
 
 // DATES ***********************************************************************************************************************************
 D.extend(customParseFormat)
@@ -23,19 +24,19 @@ export function rhfErrorsFromZod<TFieldValues extends FieldValues = FieldValues>
 }
 
 // SERVICES ********************************************************************************************************************************
-export function isPrimaryService(serviceSlug?: string) {
-  return serviceSlug === "alchimie-cellulaire"
+
+export function getServiceColor(slug?: Service["slug"]) {
+  return isPrimaryService(slug) ? "primary" : "secondary"
 }
 
-export function getServiceColor(serviceSlug?: string) {
-  return isPrimaryService(serviceSlug) ? "primary" : "secondary"
-}
-
-export function getServiceDuration(duration: string) {
-  return D(duration, "HH:mm:ss").format("H[h]mm")
-}
-
-export function getServicePrice(price: number) {
+export function getServicePrice(price: Service["price"]) {
   return Intl.NumberFormat("fr-FR", {style: "currency", currency: "EUR"}).format(price)
 }
 
+export function getServicesZcalUrl() {
+  return `https://zcal.co/emb/theodosis?embed=1&embedType=iframe`
+}
+
+export function isPrimaryService(slug?: Service["slug"]) {
+  return slug === "alchimie-cellulaire"
+}

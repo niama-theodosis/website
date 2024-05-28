@@ -4,8 +4,8 @@ import {BUTTON, Button} from "@/components/ui/button"
 import {Label} from "@/components/ui/label"
 import {Separator} from "@/components/ui/separator"
 import {Sheet, SheetClose, SheetContent, SheetTrigger} from "@/components/ui/sheet"
-import {fetchContact, fetchServices} from "@/lib/db"
-import type {ImageDto} from "@/lib/schemas"
+import {fetchContact, fetchServices} from "@/lib/pocketbase"
+import type {Image} from "@/lib/pocketbase/schemas"
 import {cn} from "@/lib/utils"
 import Link from "next/link"
 import {Fragment, forwardRef, type HTMLAttributes} from "react"
@@ -52,9 +52,7 @@ export const Header = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(async
                       {i > 0 && <Separator />}
                       {items ? (
                         <>
-                          <Label className={BUTTON({variant: "label", size: "lg", className: "font-bold"})}>
-                            {label}
-                          </Label>
+                          <Label className={BUTTON({variant: "label", size: "lg", className: "font-bold"})}>{label}</Label>
                           {items.map(({id, label, href}) => (
                             <SheetClose key={id} asChild>
                               <Button variant="ghost" asChild>
@@ -65,7 +63,7 @@ export const Header = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(async
                         </>
                       ) : (
                         <SheetClose key={id} asChild>
-                          <Button variant="ghost" size="lg" asChild className="font-bold"> 
+                          <Button variant="ghost" size="lg" asChild className="font-bold">
                             <Link href={href}>{label}</Link>
                           </Button>
                         </SheetClose>
@@ -84,4 +82,4 @@ export const Header = forwardRef<HTMLElement, HTMLAttributes<HTMLElement>>(async
 Header.displayName = "Header"
 
 // TYPES ***********************************************************************************************************************************
-export type Nav = {id: string; href: string; label: string; items?: (Nav & {image: ImageDto; text: string})[]}
+export type Nav = {id: string; href: string; label: string; items?: (Nav & {image: Image; text: string})[]}

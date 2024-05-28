@@ -1,11 +1,11 @@
 import {Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator} from "@/components/ui/breadcrumb"
 import Iframe from "@/components/ui/iframe"
-import {fetchService} from "@/lib/db"
+import {fetchService} from "@/lib/pocketbase"
 import Link from "next/link"
 import {notFound} from "next/navigation"
 
 // STATIC **********************************************************************************************************************************
-export {fetchServiceSlugs as generateStaticParams} from "@/lib/db"
+export {fetchServiceSlugs as generateStaticParams} from "@/lib/pocketbase"
 
 // ROOT ************************************************************************************************************************************
 export default async function MeetingItemPage({params: {slug}}: Props) {

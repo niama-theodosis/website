@@ -23,6 +23,12 @@ const config = {
         port: "",
         pathname: "/**/**",
       },
+      {
+        protocol: "https",
+        hostname: "niama-theodosis.imgix.net",
+        port: "",
+        pathname: "/**/**",
+      },
     ],
   },
 }

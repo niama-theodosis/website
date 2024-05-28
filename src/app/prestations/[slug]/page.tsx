@@ -6,65 +6,21 @@ import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components
 import {Prose} from "@/components/ui/prose"
 import {Section, SectionAside, SectionContent, SectionHeader, SectionMain, SectionTagline, SectionTitle} from "@/components/ui/section"
 import {Separator} from "@/components/ui/separator"
-import {env} from "@/env"
-import {fetchOtherServices, fetchService} from "@/lib/db"
-import {hashnode} from "@/lib/hashnode"
-import {StaticPageFragment} from "@/lib/hashnode/fragments"
-import {graphql, readFragment} from "@/lib/hashnode/graphql"
-import type {Service} from "@/lib/schemas"
-import {getServiceColor, getServiceDuration, getServicePrice} from "@/lib/utils"
+import {fetchOtherServices, fetchService, } from "@/lib/pocketbase"
+import type {Service} from "@/lib/pocketbase/schemas"
+import {getServiceColor, getServicePrice} from "@/lib/utils"
 import Image from "next/image"
 import {notFound} from "next/navigation"
 
-// CACHE ***********************************************************************************************************************************
-export const revalidate = 0 // 86400 // 1 day
-
-// GQL *************************************************************************************************************************************
-const ServiceSectionsQuery = graphql(
-  `
-    query ServiceSections($host: String!, $benefits: String!, $intro: String!, $proceedings: String!, $reasons: String!) {
-      publication(host: $host) {
-        benefits: staticPage(slug: $benefits) {
-          ...StaticPage
-        }
-        intro: staticPage(slug: $intro) {
-          ...StaticPage
-        }
-        proceedings: staticPage(slug: $proceedings) {
-          ...StaticPage
-        }
-        reasons: staticPage(slug: $reasons) {
-          ...StaticPage
-        }
-      }
-    }
-  `,
-  [StaticPageFragment]
-)
-
 // STATIC **********************************************************************************************************************************
-export {fetchServiceSlugs as generateStaticParams} from "@/lib/db"
+export {fetchServiceSlugs as generateStaticParams} from "@/lib/pocketbase"
   
 // ROOT ************************************************************************************************************************************
 export default async function ServicesItemPage({params: {slug}}: ServicesItemPageProps) {
-  const [{publication}, item] = await Promise.all([
-    hashnode.request(ServiceSectionsQuery, {
-      host: env.HASHNODE_PUBLICATION_HOST,
-      benefits: `prestations-${slug}-bienfaits`,
-      intro: `prestations-${slug}-introduction`,
-      proceedings: `prestations-${slug}-deroulement`,
-      reasons: `prestations-${slug}-raisons`,
-    }),
-    fetchService(slug),
-  ])
-
-  if (!item || !publication?.benefits || !publication?.intro || !publication?.proceedings || !publication?.reasons) notFound()
-
-  const benefits = readFragment(StaticPageFragment, publication.benefits)
-  const intro = readFragment(StaticPageFragment, publication.intro)
-  const proceedings = readFragment(StaticPageFragment, publication.proceedings)
-  const reasons = readFragment(StaticPageFragment, publication.reasons)
-  const {duration, image, name, payments, places, price} = item
+  const item = await fetchService(slug)
+  
+  if (!item) notFound()
+  const {benefits, content, duration, image, name, payments, places, price, proceedings, reasons} = item
 
   return (
     <>
@@ -74,30 +30,30 @@ export default async function ServicesItemPage({params: {slug}}: ServicesItemPag
             <SectionHeader>
               <SectionTitle>{name}</SectionTitle>
             </SectionHeader>
-            <Prose dangerouslySetInnerHTML={{__html: intro.content.html}} />
+            <Prose dangerouslySetInnerHTML={{__html: content}} />
             <Accordion type="multiple" className="w-full">
               <AccordionItem value="reasons">
                 <AccordionTrigger variant={getServiceColor(slug)}>Pourquoi opter pour une séance ?</AccordionTrigger>
                 <AccordionContent className="text-base">
-                  <Prose dangerouslySetInnerHTML={{__html: reasons.content.html}} />
+                  <Prose dangerouslySetInnerHTML={{__html: reasons}} />
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="proceedings">
                 <AccordionTrigger variant={getServiceColor(slug)}>Comment celle-ci se déroule-t-elle ?</AccordionTrigger>
                 <AccordionContent className="text-base">
-                  <Prose dangerouslySetInnerHTML={{__html: proceedings.content.html}} />
+                  <Prose dangerouslySetInnerHTML={{__html: proceedings}} />
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="benefits">
                 <AccordionTrigger variant={getServiceColor(slug)}>Quels en sont les bienfaits ?</AccordionTrigger>
                 <AccordionContent className="text-base">
-                  <Prose dangerouslySetInnerHTML={{__html: benefits.content.html}} />
+                  <Prose dangerouslySetInnerHTML={{__html: benefits}} />
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
           </SectionMain>
           <SectionAside className="gap-8 place-self-start">
-            <Image src={image.url} alt={name} width={1024} height={1024} className="col-span-12 rounded-2xl md:col-span-6 lg:col-span-12" />
+            <Image src={image.src} alt={name} width={1024} height={1024} className="col-span-12 rounded-2xl md:col-span-6 lg:col-span-12" />
             <Card className="p-6 col-span-12 md:col-span-6 lg:col-span-12">
               <CardHeader>
                 <CardTitle>Vous êtes intéressé·e?</CardTitle>
@@ -153,7 +109,7 @@ function ServiceDuration({duration}: Pick<Service, "duration">) {
   return (
     <div className="space-x-2 text-lg">
       <span className="font-bold">Durée</span>
-      <span>{getServiceDuration(duration)}</span>
+      <span>{duration}</span>
     </div>
   )
 }

@@ -155,24 +155,3 @@ export const PublicationFragment = graphql(`
     }
   }
 `)
-
-// STATIC PAGE *****************************************************************************************************************************
-export const StaticPageFragment = graphql(`
-  fragment StaticPage on StaticPage {
-    content {
-      html
-      text
-    }
-    hidden
-    id
-    ogMetaData {
-      image
-    }
-    seo {
-      description
-      title
-    }
-    slug
-    title
-  }
-`)

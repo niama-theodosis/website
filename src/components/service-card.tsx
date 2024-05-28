@@ -1,7 +1,7 @@
 import {MeetingButton} from "@/components/meeting-button"
 import {MoreButton} from "@/components/more-button"
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card"
-import type {Service} from "@/lib/schemas"
+import type {Service} from "@/lib/pocketbase/schemas"
 import {getServiceColor} from "@/lib/utils"
 import Image from "next/image"
 
@@ -10,7 +10,7 @@ export default function ServiceCard({service: {excerpt, image, name, slug, uri}}
   return (
     <Card>
       <CardHeader>
-        <Image src={image.url} alt={name} width={550} height={550} className="aspect-video rounded-2xl object-cover" />
+        <Image src={image.src} alt={name} width={550} height={550} className="aspect-video rounded-2xl object-cover" />
       </CardHeader>
       <CardContent className="text-center">
         <CardTitle className="text-xl">{name}</CardTitle>

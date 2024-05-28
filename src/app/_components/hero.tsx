@@ -8,18 +8,16 @@ import {
   SectionTitle,
   TAGLINE
 } from "@/components/ui/section"
-import {fetchPage} from "@/lib/hashnode"
+import {fetchHome} from "@/lib/pocketbase"
 import Image from "next/image"
-import {notFound} from "next/navigation"
 
 // CACHE ***********************************************************************************************************************************
 // export const revalidate = 0 // 86400 // 1 day
 
 // ROOT ************************************************************************************************************************************
 export async function HomeHero() {
-  const data = await fetchPage("accueil-que-sont-les-memoires-cellulaires")
-  if (!data) notFound()
-  const {content, image, title} = data
+  const {hero} = await fetchHome()
+  const {content, image, title} = hero
 
   return (
     <Section variant="default">
@@ -29,7 +27,7 @@ export async function HomeHero() {
             <SectionTitle level={1} className="text-5xl md:text-6xl">
               {title}
             </SectionTitle>
-            <div dangerouslySetInnerHTML={{__html: content.html}} className={TAGLINE({className: "text-justify lg:text-left"})} />
+            <div dangerouslySetInnerHTML={{__html: content}} className={TAGLINE({className: "text-justify lg:text-left"})} />
           </SectionHeader>
           <MoreButton href="/prestations/alchimie-cellulaire" color="primary" size="lg" className="self-end" />
         </SectionMain>

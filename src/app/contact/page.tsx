@@ -3,7 +3,7 @@ import {Card, CardContent} from "@/components/ui/card"
 import {Section, SectionAside, SectionContent, SectionHeader, SectionMain, SectionTagline, SectionTitle} from "@/components/ui/section"
 import {Toaster} from "@/components/ui/sonner"
 import {HEADING} from "@/components/ui/typography"
-import {fetchContact} from "@/lib/db"
+import {fetchContact} from "@/lib/pocketbase"
 import dynamic from "next/dynamic"
 import ContactForm from "./_components/form"
 

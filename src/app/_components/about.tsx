@@ -1,17 +1,16 @@
 import {MoreButton} from "@/components/more-button"
-import {Section, SectionAside, SectionContent, SectionHeader, SectionMain, SectionTitle, TAGLINE} from "@/components/ui/section"
-import {fetchPage} from "@/lib/hashnode"
+import {Prose} from "@/components/ui/prose"
+import {Section, SectionAside, SectionContent, SectionHeader, SectionMain, SectionTitle} from "@/components/ui/section"
+import {fetchHome} from "@/lib/pocketbase"
 import Image from "next/image"
-import {notFound} from "next/navigation"
 
 // CACHE ***********************************************************************************************************************************
 // export const revalidate = 0 // 86400 // 1 day
 
 // ROOT ************************************************************************************************************************************
 export async function HomeAbout() {
-  const data = await fetchPage("accueil-qui-suis-je")
-  if (!data) notFound()
-  const {content, image, title} = data
+  const {about} = await fetchHome()
+  const {content, image, title} = about
 
   return (
     <Section variant="default" className="px-8">
@@ -24,7 +23,7 @@ export async function HomeAbout() {
         <SectionMain className="place-self-center">
           <SectionHeader>
             <SectionTitle>{title}</SectionTitle>
-            <div dangerouslySetInnerHTML={{__html: content.html}} className={TAGLINE({className: "text-justify lg:text-left"})} />
+            <Prose dangerouslySetInnerHTML={{__html: content}} />
           </SectionHeader>
           <MoreButton href="/qui-suis-je" size="lg" className="self-end" />
         </SectionMain>
