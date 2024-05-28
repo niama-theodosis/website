@@ -38,7 +38,7 @@ export const fetchPage = (slug: string) =>
         return zPageRecord.parse(record)
       } catch {}
     },
-    undefined,
+    [slug],
     {tags: [`pages_${slug}`]}
   )()
 
@@ -51,7 +51,7 @@ export const fetchService = (slug: string) =>
         return zService.parse(record)
       } catch {}
     },
-    undefined,
+    [slug],
     {tags: [`services_${slug}`]}
   )()
 
